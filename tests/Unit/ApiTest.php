@@ -2,9 +2,9 @@
 
 namespace AvtoDev\SmsPilotNotificationsChanel\Tests\Unit;
 
-use AvtoDev\SmsPilotNotificationsChanel\ApiClient\SmsPilotApi;
 use GuzzleHttp\Handler\MockHandler;
 use AvtoDev\SmsPilotNotificationsChanel\Messages\SentMessage;
+use AvtoDev\SmsPilotNotificationsChanel\ApiClient\SmsPilotApi;
 use AvtoDev\SmsPilotNotificationsChanel\Tests\AbstractTestCase;
 
 class ApiTest extends AbstractTestCase

@@ -2,9 +2,9 @@
 
 namespace AvtoDev\SmsPilotNotificationsChanel;
 
-use AvtoDev\SmsPilotNotificationsChanel\Messages\SentMessage;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
+use AvtoDev\SmsPilotNotificationsChanel\Messages\SentMessage;
 
 /**
  * Class SmsPilotHttpResponse.

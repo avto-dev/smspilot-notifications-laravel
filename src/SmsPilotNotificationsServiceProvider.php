@@ -2,8 +2,8 @@
 
 namespace AvtoDev\SmsPilotNotificationsChanel;
 
-use AvtoDev\SmsPilotNotificationsChanel\ApiClient\SmsPilotApi;
 use Illuminate\Foundation\Application;
+use AvtoDev\SmsPilotNotificationsChanel\ApiClient\SmsPilotApi;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 /**

@@ -38,6 +38,22 @@ class SentMessage implements MessageInterface
     protected $status_code;
 
     /**
+     * SentMessage constructor.
+     *
+     * @param int    $server_id
+     * @param string $phone
+     * @param float  $price
+     * @param int    $status_code
+     */
+    public function __construct($server_id, $phone, $price, $status_code)
+    {
+        $this->server_id   = (int) $server_id;
+        $this->phone       = (string) $phone;
+        $this->price       = (float) $price;
+        $this->status_code = (int) $status_code;
+    }
+
+    /**
      * Convert status code into message.
      *
      * @param int|null $status_code
@@ -62,22 +78,6 @@ class SentMessage implements MessageInterface
         }
 
         return 'Unknown status code';
-    }
-
-    /**
-     * SentMessage constructor.
-     *
-     * @param int    $server_id
-     * @param string $phone
-     * @param float  $price
-     * @param int    $status_code
-     */
-    public function __construct($server_id, $phone, $price, $status_code)
-    {
-        $this->server_id   = (int) $server_id;
-        $this->phone       = (string) $phone;
-        $this->price       = (float) $price;
-        $this->status_code = (int) $status_code;
     }
 
     /**

@@ -3,8 +3,8 @@
 namespace AvtoDev\SmsPilotNotificationsChanel\Tests\Unit;
 
 use Mockery;
-use AvtoDev\SmsPilotNotificationsChanel\ApiClient\SmsPilotApi;
 use AvtoDev\SmsPilotNotificationsChanel\SmsPilotChannel;
+use AvtoDev\SmsPilotNotificationsChanel\ApiClient\SmsPilotApi;
 use AvtoDev\SmsPilotNotificationsChanel\Tests\AbstractTestCase;
 use AvtoDev\SmsPilotNotificationsChanel\Tests\Examples\ExampleNotification;
 use AvtoDev\SmsPilotNotificationsChanel\Tests\Examples\SmsNotificationReceiver;

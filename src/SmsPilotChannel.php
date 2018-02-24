@@ -2,8 +2,8 @@
 
 namespace AvtoDev\SmsPilotNotificationsChanel;
 
-use AvtoDev\SmsPilotNotificationsChanel\ApiClient\SmsPilotApi;
 use Illuminate\Notifications\Notification;
+use AvtoDev\SmsPilotNotificationsChanel\ApiClient\SmsPilotApi;
 use AvtoDev\SmsPilotNotificationsChanel\Exceptions\CouldNotSendNotification;
 
 /**
