@@ -7,7 +7,7 @@ namespace AvtoDev\SmsPilotNotifications\Messages;
  *
  * Sent message object.
  */
-class SentMessage
+class SmsPilotSentMessage
 {
     /**
      * Server ID.

@@ -2,13 +2,13 @@
 
 namespace AvtoDev\SmsPilotNotifications\ApiClient;
 
-use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
+use Exception;
+use GuzzleHttp\Client as GuzzleHttpClient;
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 use AvtoDev\SmsPilotNotifications\Exceptions\CannotSendMessage;
 use AvtoDev\SmsPilotNotifications\Exceptions\HttpRequestException;
 use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
-use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
-use Exception;
-use GuzzleHttp\Client as GuzzleHttpClient;
+use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 
 /**
  * Class SmsPilotApi.

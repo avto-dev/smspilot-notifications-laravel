@@ -45,7 +45,7 @@ class SmsPilotMessage
     /**
      * Set a sender name.
      *
-     * @param  string $sender_name
+     * @param string $sender_name
      *
      * @return static|self
      */
@@ -59,7 +59,7 @@ class SmsPilotMessage
     /**
      * Set receiver phone number (the message should be sent to).
      *
-     * @param  string $phone_number
+     * @param string $phone_number
      *
      * @return static|self
      */
@@ -73,7 +73,7 @@ class SmsPilotMessage
     /**
      * Set the content of SMS message.
      *
-     * @param  string $content
+     * @param string $content
      *
      * @return static|self
      */

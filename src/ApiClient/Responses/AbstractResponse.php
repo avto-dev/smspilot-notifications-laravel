@@ -2,9 +2,9 @@
 
 namespace AvtoDev\SmsPilotNotifications\ApiClient\Responses;
 
-use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
 use Illuminate\Support\Arr;
 use Psr\Http\Message\ResponseInterface;
+use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
 
 /**
  * Class AbstractApiClientResponse.
@@ -35,26 +35,6 @@ abstract class AbstractResponse
     }
 
     /**
-     * Read response body as a json string, and decode it to the array.
-     *
-     * @param ResponseInterface $http_response
-     *
-     * @return array
-     *
-     * @throws InvalidResponseException
-     */
-    protected function decodeResponseBody(ResponseInterface $http_response)
-    {
-        $decoded = json_decode($http_response->getBody(), true);
-
-        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-            return $decoded;
-        }
-
-        throw new InvalidResponseException('Cannot decode response body (probably wrong JSON structure)');
-    }
-
-    /**
      * Get base response object.
      *
      * @return ResponseInterface
@@ -70,7 +50,7 @@ abstract class AbstractResponse
      * Otherwise (if key passed) - returns an item from body content using "dot" notation.
      *
      * @param string|null $key
-     * @param mixed|null $default
+     * @param mixed|null  $default
      *
      * @return array|mixed
      */
@@ -79,5 +59,25 @@ abstract class AbstractResponse
         return empty($key)
             ? $this->decoded_body
             : Arr::get($this->decoded_body, $key, $default);
+    }
+
+    /**
+     * Read response body as a json string, and decode it to the array.
+     *
+     * @param ResponseInterface $http_response
+     *
+     * @throws InvalidResponseException
+     *
+     * @return array
+     */
+    protected function decodeResponseBody(ResponseInterface $http_response)
+    {
+        $decoded = json_decode($http_response->getBody(), true);
+
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+            return $decoded;
+        }
+
+        throw new InvalidResponseException('Cannot decode response body (probably wrong JSON structure)');
     }
 }

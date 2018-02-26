@@ -10,34 +10,6 @@ use AvtoDev\SmsPilotNotifications\Messages\SentMessage;
 class MessageSentResponse extends AbstractResponse
 {
     /**
-     * Convert RAW message data (passed as an array) into object.
-     *
-     * @param array $message_data
-     *
-     * @return SentMessage|null
-     */
-    protected function convertRawMessageInfoIntoObject($message_data)
-    {
-        $message_data = (array) $message_data;
-
-        if (
-            isset($message_data['server_id'])
-            && isset($message_data['phone'])
-            && isset($message_data['price'])
-            && isset($message_data['status'])
-        ) {
-            return new SentMessage(
-                $message_data['server_id'],
-                $message_data['phone'],
-                $message_data['price'],
-                $message_data['status']
-            );
-        }
-
-        return null;
-    }
-
-    /**
      * Returns array of sent messages info.
      *
      * @return SentMessage[]|array
@@ -79,5 +51,31 @@ class MessageSentResponse extends AbstractResponse
         return is_numeric($cost)
             ? (float) $cost
             : null;
+    }
+
+    /**
+     * Convert RAW message data (passed as an array) into object.
+     *
+     * @param array $message_data
+     *
+     * @return SentMessage|null
+     */
+    protected function convertRawMessageInfoIntoObject($message_data)
+    {
+        $message_data = (array) $message_data;
+
+        if (
+            isset($message_data['server_id'])
+            && isset($message_data['phone'])
+            && isset($message_data['price'])
+            && isset($message_data['status'])
+        ) {
+            return new SentMessage(
+                $message_data['server_id'],
+                $message_data['phone'],
+                $message_data['price'],
+                $message_data['status']
+            );
+        }
     }
 }

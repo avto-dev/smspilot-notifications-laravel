@@ -2,12 +2,12 @@
 
 namespace AvtoDev\SmsPilotNotifications;
 
-use AvtoDev\SmsPilotNotifications\ApiClient\ApiClientInterface as SmsPilotApiClient;
+use InvalidArgumentException;
+use Illuminate\Notifications\Notification;
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 use AvtoDev\SmsPilotNotifications\Exceptions\MissingNotificationRouteException;
-use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
-use Illuminate\Notifications\Notification;
-use InvalidArgumentException;
+use AvtoDev\SmsPilotNotifications\ApiClient\ApiClientInterface as SmsPilotApiClient;
 
 /**
  * Class SmsPilotChannel.
@@ -24,7 +24,7 @@ class SmsPilotChannel
     /**
      * Create a new SMS Pilot channel instance.
      *
-     * @param  SmsPilotApiClient $api_client
+     * @param SmsPilotApiClient $api_client
      *
      * @return void
      */
@@ -36,13 +36,13 @@ class SmsPilotChannel
     /**
      * Send the given notification.
      *
-     * @param  mixed        $notifiable
-     * @param  Notification $notification
-     *
-     * @return MessageSentResponse|null
+     * @param mixed        $notifiable
+     * @param Notification $notification
      *
      * @throws MissingNotificationRouteException
      * @throws InvalidArgumentException
+     *
+     * @return MessageSentResponse|null
      */
     public function send($notifiable, Notification $notification)
     {

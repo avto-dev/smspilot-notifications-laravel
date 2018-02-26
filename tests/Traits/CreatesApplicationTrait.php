@@ -2,8 +2,8 @@
 
 namespace AvtoDev\SmsPilotNotifications\Tests\Traits;
 
-use AvtoDev\SmsPilotNotifications\SmsPilotServiceProvider;
 use Illuminate\Contracts\Console\Kernel;
+use AvtoDev\SmsPilotNotifications\SmsPilotServiceProvider;
 
 trait CreatesApplicationTrait
 {

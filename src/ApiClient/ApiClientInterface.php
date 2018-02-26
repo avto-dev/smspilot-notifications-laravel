@@ -2,10 +2,10 @@
 
 namespace AvtoDev\SmsPilotNotifications\ApiClient;
 
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 use AvtoDev\SmsPilotNotifications\Exceptions\CannotSendMessage;
 use AvtoDev\SmsPilotNotifications\Exceptions\HttpRequestException;
 use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
-use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 
 /**
  * Interface SMSPilotApiInterface.
