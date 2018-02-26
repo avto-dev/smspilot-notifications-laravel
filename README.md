@@ -71,9 +71,11 @@ SMS_PILOT_SENDER_NAME=%your_sender_name%
 ```php
 use AvtoDev\SmsPilotNotifications\SmsPilotChannel;
 use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
-use Illuminate\Notifications\Notification;
 
-class AccountApproved extends Notification
+/**
+ * Notification object.
+ */
+class Notification extends \Illuminate\Notifications\Notification
 {
     /**
      * Get the notification channels.
@@ -97,8 +99,7 @@ class AccountApproved extends Notification
     public function toSmsPilot($notifiable)
     {
         return SmsPilotMessage::create()
-            ->to('71112223344')
-            ->content("Your {$notifiable->service} account was approved!"));
+            ->content('Some SMS notification message');
     }
 }
 ```
@@ -110,6 +111,28 @@ class AccountApproved extends Notification
 `from()`    | Имя отправителя из [списка][smspilot_sender_names] (опционально)
 `to()`      | Номер телефона получателя
 `content()` | Текст сообщения уведомления
+
+Пример нотифицируемого объекта:
+
+```php
+/**
+ * Notifiable object.
+ */
+class Notifiable
+{
+    use \Illuminate\Notifications\Notifiable;
+    
+    /**
+     * Get route for 'SMS Pilot' notification.
+     *
+     * @return string
+     */
+    public function routeNotificationForSmsPilot()
+    {
+        return '71112223344';
+    }
+}
+```
 
 ### Тестирование
 

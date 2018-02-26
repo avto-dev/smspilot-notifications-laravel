@@ -2,7 +2,7 @@
 
 namespace AvtoDev\SmsPilotNotifications\Tests\Traits;
 
-use PHPUnit\Framework\AssertionFailedError;
+use ReflectionClass;
 
 /**
  * Trait AdditionalAssertsTrait.
@@ -12,39 +12,19 @@ use PHPUnit\Framework\AssertionFailedError;
 trait AdditionalAssertsTrait
 {
     /**
-     * Assert that value is array.
+     * Extract protected property
      *
-     * @param $value
+     * @param object $object
+     * @param string $property_name
      *
-     * @throws AssertionFailedError
+     * @return mixed
      */
-    public function assertIsArray($value)
+    public function getPropertyValue($object, $property_name)
     {
-        $this->assertTrue(is_array($value), 'Must be an array');
-    }
+        $reflectionClass = new ReflectionClass($object);
+        $property        = $reflectionClass->getProperty($property_name);
+        $property->setAccessible(true);
 
-    /**
-     * Assert that value is'n empty string.
-     *
-     * @param $value
-     *
-     * @throws AssertionFailedError
-     */
-    public function assertIsNotEmptyString($value)
-    {
-        $this->assertIsString($value);
-        $this->assertNotEmpty($value);
-    }
-
-    /**
-     * Assert that value is string.
-     *
-     * @param $value
-     *
-     * @throws AssertionFailedError
-     */
-    public function assertIsString($value)
-    {
-        $this->assertTrue(is_string($value), 'Must be string');
+        return $property->getValue($object);
     }
 }
