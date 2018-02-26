@@ -1,13 +1,13 @@
 <?php
 
-namespace AvtoDev\SmsPilotNotificationsChanel\Messages;
+namespace AvtoDev\SmsPilotNotifications\Messages;
 
 /**
  * Class SentMessage.
  *
  * Sent message object.
  */
-class SentMessage implements MessageInterface
+class SentMessage
 {
     /**
      * Server ID.
@@ -81,7 +81,9 @@ class SentMessage implements MessageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get server ID.
+     *
+     * @return int
      */
     public function getServerId()
     {
@@ -89,7 +91,9 @@ class SentMessage implements MessageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get phone number.
+     *
+     * @return string
      */
     public function getPhone()
     {
@@ -107,7 +111,9 @@ class SentMessage implements MessageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get status code.
+     *
+     * @return int
      */
     public function getStatusCode()
     {
@@ -115,7 +121,9 @@ class SentMessage implements MessageInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get status message as a string.
+     *
+     * @return string
      */
     public function getStatus()
     {

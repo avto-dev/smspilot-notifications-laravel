@@ -1,20 +1,21 @@
 <?php
 
-namespace AvtoDev\SmsPilotNotificationsChanel\ApiClient;
+namespace AvtoDev\SmsPilotNotifications\ApiClient;
 
+use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
+use AvtoDev\SmsPilotNotifications\Exceptions\CannotSendMessage;
+use AvtoDev\SmsPilotNotifications\Exceptions\HttpRequestException;
+use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 use Exception;
 use GuzzleHttp\Client as GuzzleHttpClient;
-use AvtoDev\SmsPilotNotificationsChanel\SmsPilotHttpResponse;
-use AvtoDev\SmsPilotNotificationsChanel\Exceptions\CannotSendMessage;
-use AvtoDev\SmsPilotNotificationsChanel\Exceptions\HttpRequestException;
-use AvtoDev\SmsPilotNotificationsChanel\Exceptions\InvalidResponseException;
 
 /**
  * Class SmsPilotApi.
  *
  * SMS Pilot API service.
  */
-class SmsPilotApi implements SMSPilotApiInterface
+class ApiClient implements ApiClientInterface
 {
     /**
      * API entry-point URI.
@@ -44,45 +45,46 @@ class SmsPilotApi implements SMSPilotApiInterface
      *
      * @var string
      */
-    protected $sender_name;
+    protected $default_sender_name;
 
     /**
      * SmsPilotApi constructor.
      *
-     * @param string $api_key            API key
-     * @param string $sender_name        Sender name
-     * @param array  $http_client_config Additional HTTP client settings
+     * @param string $api_key             API key
+     * @param string $default_sender_name Default sender name
      */
-    public function __construct($api_key, $sender_name, $http_client_config = [])
+    public function __construct($api_key, $default_sender_name)
     {
-        $this->api_key     = (string) $api_key;
-        $this->sender_name = (string) $sender_name;
+        $this->api_key             = (string) $api_key;
+        $this->default_sender_name = (string) $default_sender_name;
 
-        $this->http_client = $this->httpClientFactory((array) $http_client_config);
+        $this->http_client = $this->httpClientFactory();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function send($text, $recipient, array $params = [])
+    public function send(SmsPilotMessage $message)
     {
-        $base = [
-            'charset' => 'utf-8',
-            'send'    => $text,
-            'to'      => $recipient,
-            'apikey'  => $this->api_key,
-            'from'    => $this->sender_name,
-            'format'  => 'json',
-        ];
-
         try {
             $response = $this->http_client->request(
                 'get',
                 $this->api_uri,
-                ['query' => array_replace_recursive($base, $params)]
+                [
+                    'query' => [
+                        'charset' => 'utf-8',
+                        'send'    => $message->content,
+                        'to'      => $message->phone_number,
+                        'apikey'  => $this->api_key,
+                        'from'    => ! empty($message->sender_name) && is_string($message->sender_name)
+                            ? $message->sender_name
+                            : $this->default_sender_name,
+                        'format'  => 'json',
+                    ],
+                ]
             );
         } catch (Exception $e) {
-            throw new HttpRequestException('Cannot complete HTTP request to the SMS Pilot API service', 0, $e);
+            throw new HttpRequestException('Cannot complete HTTP request to the SMS Pilot API', $e->getCode(), $e);
         }
 
         $decoded_response = json_decode((string) $response->getBody(), true);
@@ -101,9 +103,9 @@ class SmsPilotApi implements SMSPilotApiInterface
                 );
             }
 
-            return new SmsPilotHttpResponse($response);
+            return new MessageSentResponse($response);
         } else {
-            throw new InvalidResponseException('Ve\'v got invalid server response (invalid JSON)');
+            throw new InvalidResponseException('We\'v got invalid server response (invalid JSON)');
         }
     }
 
@@ -114,11 +116,11 @@ class SmsPilotApi implements SMSPilotApiInterface
      *
      * @return GuzzleHttpClient
      */
-    protected function httpClientFactory($http_client_config = [])
+    protected function httpClientFactory(array $http_client_config = [])
     {
         return new GuzzleHttpClient(array_replace_recursive([
-            'timeout'         => 5,
-            'connect_timeout' => 5,
+            'timeout'         => 25,
+            'connect_timeout' => 25,
         ], $http_client_config));
     }
 }

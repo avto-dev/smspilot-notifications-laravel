@@ -2,7 +2,7 @@
   <img src="https://laravel.com/assets/img/components/logo-laravel.svg" alt="Laravel" width="240" />
 </p>
 
-# SmsPilotNotificationsChanel for Laravel applications
+# Канал уведомлений для сервиса "SMS Pilot"
 
 [![Version][badge_version]][link_packagist]
 [![Build Status][badge_build_status]][link_build_status]
@@ -13,7 +13,7 @@
 [![License][badge_license]][link_license]
 [![Downloads count][badge_downloads_count]][link_packagist]
 
-{% Более полное описание пакета, которое позволяет принять решение о его предназначении и применимости в том проекте, работа над которым привела пользователя в данный репозиторий. %}
+Используя данный канал для уведомлений вы сможете легко интегрировать SMS уведомления в ваше Laravel-приложение, для отправки которых используется сервис "[SMS Pilot][smspilot_home]".
 
 ## Установка
 
@@ -32,13 +32,84 @@ $ composer require avto-dev/smspilot-notifications-laravel "^1.0"
 ```php
 'providers' => [
     // ...
-    AvtoDev\SmsPilotNotificationsChanel\SmsPilotNotificationsServiceProvider::class,
+    AvtoDev\SmsPilotNotifications\SmsPilotServiceProvider::class,
 ]
 ```
 
+## Настройка
+
+После установки вам необходимо изменить файл `./config/services.php`, добавив в него следующие строки:
+
+```php
+return [
+ 
+    // ...
+    
+    'smspilot' => [
+        'key'         => env('SMS_PILOT_API_KEY'),
+        'sender_name' => env('SMS_PILOT_SENDER_NAME'),
+    ],
+ 
+];
+```
+
+И добавить в файл `./.env`:
+
+```ini
+SMS_PILOT_API_KEY=%your_api_key%
+SMS_PILOT_SENDER_NAME=%your_sender_name%
+```
+
+Где `SMS_PILOT_API_KEY` - это ключ (токен) авторизации на сервисе SMS Pilot (получить его вы можете [на данной странице][smspilot_get_api_key]), а `SMS_PILOT_SENDER_NAME` - это имя отправителя, которое установлено в [панели управления][smspilot_sender_names] (будет использоваться как имя отправителя по умолчанию).
+
 ## Использование
 
-{% В данном блоке следует максимально подробно рассказать о том, какие задачи решает данный пакет, какое API предоставляет разработчику, из каких компонентов состоит и привести примеры использования с примерами кода. Привести максимально подробне разъяснения и комментарии. %}
+> Ознакомиться с тем, как работают нотификации в Laravel-приложениях вы можете [по этой ссылке][laravel_notifications].
+
+Базовый пример отправки уведомления может выглядеть следующим образом:
+
+```php
+use AvtoDev\SmsPilotNotifications\SmsPilotChannel;
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
+use Illuminate\Notifications\Notification;
+
+class AccountApproved extends Notification
+{
+    /**
+     * Get the notification channels.
+     *
+     * @param mixed $notifiable
+     *
+     * @return array|string
+     */
+    public function via($notifiable)
+    {
+        return [SmsPilotChannel::class];
+    }
+
+    /**
+     * Get the SMS Pilot Message representation of the notification.
+     *
+     * @param mixed $notifiable
+     *
+     * @return SmsPilotMessage
+     */
+    public function toSmsPilot($notifiable)
+    {
+        return SmsPilotMessage::create()
+            ->to('71112223344')
+            ->content("Your {$notifiable->service} account was approved!"));
+    }
+}
+```
+
+Доступные к использованию методы у объекта `SmsPilotMessage`:
+
+Имя метода  | Описание
+----------- | --------
+`from()`    | Имя отправителя из [списка][smspilot_sender_names] (опционально)
+`to()`      | Номер телефона получателя
+`content()` | Текст сообщения уведомления
 
 ### Тестирование
 
@@ -46,7 +117,7 @@ $ composer require avto-dev/smspilot-notifications-laravel "^1.0"
 
 ```shell
 $ git clone git@github.com:avto-dev/smspilot-notifications-laravel.git ./smspilot-notifications-laravel && cd $_
-$ composer install
+$ composer update
 $ composer test
 ```
 
@@ -74,4 +145,8 @@ $ composer test
 [link_build_status]:https://scrutinizer-ci.com/g/avto-dev/smspilot-notifications-laravel/build-status/master
 [link_coverage]:https://scrutinizer-ci.com/g/avto-dev/smspilot-notifications-laravel/?branch=master
 [link_issues]:https://github.com/avto-dev/smspilot-notifications-laravel/issues
+[smspilot_home]:https://smspilot.ru/
+[smspilot_get_api_key]:https://smspilot.ru/my-settings.php#api
+[smspilot_sender_names]:https://smspilot.ru/my-sender.php
+[laravel_notifications]:https://laravel.com/docs/5.5/notifications
 [getcomposer]:https://getcomposer.org/download/

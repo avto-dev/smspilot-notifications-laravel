@@ -28,4 +28,8 @@
         <log type="coverage-clover" target="./coverage/clover.xml"/>
         <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
     </logging>
+    <php>
+        <env name="SMS_PILOT_API_KEY" value="apikey_for_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"/>
+        <env name="SMS_PILOT_SENDER_NAME" value="Some tester name"/>
+    </php>
 </phpunit>

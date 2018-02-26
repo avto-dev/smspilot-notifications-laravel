@@ -1,13 +1,13 @@
 <?php
 
-namespace AvtoDev\SmsPilotNotificationsChanel\Tests\Bootstrap;
+namespace AvtoDev\SmsPilotNotifications\Tests\Bootstrap;
 
 use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Application;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use AvtoDev\SmsPilotNotificationsChanel\Tests\Traits\CreatesApplicationTrait;
+use AvtoDev\SmsPilotNotifications\Tests\Traits\CreatesApplicationTrait;
 
 /**
  * Class AbstractTestsBootstraper.

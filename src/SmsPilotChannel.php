@@ -1,58 +1,64 @@
 <?php
 
-namespace AvtoDev\SmsPilotNotificationsChanel;
+namespace AvtoDev\SmsPilotNotifications;
 
+use AvtoDev\SmsPilotNotifications\ApiClient\ApiClientInterface as SmsPilotApiClient;
+use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
+use AvtoDev\SmsPilotNotifications\Exceptions\MissingNotificationRouteException;
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 use Illuminate\Notifications\Notification;
-use AvtoDev\SmsPilotNotificationsChanel\ApiClient\SmsPilotApi;
-use AvtoDev\SmsPilotNotificationsChanel\Exceptions\CouldNotSendNotification;
+use InvalidArgumentException;
 
 /**
  * Class SmsPilotChannel.
  *
- * Sms pilot notification channel
+ * Channel fo a working with SMS Pilot service.
  */
 class SmsPilotChannel
 {
     /**
-     * @var SmsPilotApi
+     * @var SmsPilotApiClient
      */
-    protected $api;
+    protected $api_client;
 
-    public function __construct(SmsPilotApi $api)
+    /**
+     * Create a new SMS Pilot channel instance.
+     *
+     * @param  SmsPilotApiClient $api_client
+     *
+     * @return void
+     */
+    public function __construct(SmsPilotApiClient $api_client)
     {
-        $this->api = $api;
+        $this->api_client = $api_client;
     }
 
     /**
      * Send the given notification.
      *
-     * @param mixed        $notifiable
-     * @param Notification $notification
+     * @param  mixed        $notifiable
+     * @param  Notification $notification
      *
-     * @throws CouldNotSendNotification
+     * @return MessageSentResponse|null
+     *
+     * @throws MissingNotificationRouteException
+     * @throws InvalidArgumentException
      */
     public function send($notifiable, Notification $notification)
     {
-        $to = $notifiable->routeNotificationFor('sms');
-
-        if (empty($to)) {
-            throw CouldNotSendNotification::missingRecipient();
+        if (! method_exists($notification, $route = 'toSmsPilot')) {
+            throw new MissingNotificationRouteException(sprintf('Missing notification route "%s"', $route));
         }
 
-        $text = $notification->toSms();
-
-        if (empty($text)) {
-            throw CouldNotSendNotification::missingText();
+        /** @var $message SmsPilotMessage */
+        if (! ($message = $notification->{$route}($notifiable) instanceof SmsPilotMessage)) {
+            throw new InvalidArgumentException(sprintf(
+                'Route "%s" must returns object with instance of "%s"',
+                $route,
+                SmsPilotMessage::class
+            ));
         }
 
-        $this->getApi()->send($text, $to);
-    }
-
-    /**
-     * @return SmsPilotApi
-     */
-    protected function getApi()
-    {
-        return $this->api;
+        return $this->api_client->send($message);
     }
 }

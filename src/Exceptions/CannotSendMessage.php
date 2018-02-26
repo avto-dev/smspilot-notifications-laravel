@@ -1,6 +1,6 @@
 <?php
 
-namespace AvtoDev\SmsPilotNotificationsChanel\Exceptions;
+namespace AvtoDev\SmsPilotNotifications\Exceptions;
 
 use Exception;
 

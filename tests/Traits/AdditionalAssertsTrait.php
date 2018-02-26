@@ -1,9 +1,8 @@
 <?php
 
-namespace AvtoDev\SmsPilotNotificationsChanel\Tests\Traits;
+namespace AvtoDev\SmsPilotNotifications\Tests\Traits;
 
 use PHPUnit\Framework\AssertionFailedError;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /**
  * Trait AdditionalAssertsTrait.
@@ -18,7 +17,6 @@ trait AdditionalAssertsTrait
      * @param $value
      *
      * @throws AssertionFailedError
-     * @throws InvalidArgumentException
      */
     public function assertIsArray($value)
     {
@@ -31,7 +29,6 @@ trait AdditionalAssertsTrait
      * @param $value
      *
      * @throws AssertionFailedError
-     * @throws InvalidArgumentException
      */
     public function assertIsNotEmptyString($value)
     {
@@ -45,7 +42,6 @@ trait AdditionalAssertsTrait
      * @param $value
      *
      * @throws AssertionFailedError
-     * @throws InvalidArgumentException
      */
     public function assertIsString($value)
     {

@@ -1,3 +1,3 @@
 <?php
 
-new \AvtoDev\SmsPilotNotificationsChanel\Tests\Bootstrap\TestsBootstraper;
+new \AvtoDev\SmsPilotNotifications\Tests\Bootstrap\TestsBootstraper;

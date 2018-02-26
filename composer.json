@@ -30,12 +30,12 @@
     },
     "autoload": {
         "psr-4": {
-            "AvtoDev\\SmsPilotNotificationsChanel\\": "src"
+            "AvtoDev\\SmsPilotNotifications\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "AvtoDev\\SmsPilotNotificationsChanel\\Tests\\": "tests"
+            "AvtoDev\\SmsPilotNotifications\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -45,7 +45,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "AvtoDev\\SmsPilotNotificationsChanel\\SmsPilotNotificationsServiceProvider"
+                "AvtoDev\\SmsPilotNotifications\\SmsPilotServiceProvider"
             ]
         }
     },

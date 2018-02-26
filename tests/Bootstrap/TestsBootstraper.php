@@ -1,6 +1,6 @@
 <?php
 
-namespace AvtoDev\SmsPilotNotificationsChanel\Tests\Bootstrap;
+namespace AvtoDev\SmsPilotNotifications\Tests\Bootstrap;
 
 /**
  * Class TestsBootstraper.
