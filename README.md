@@ -45,7 +45,7 @@ return [
  
     // ...
     
-    'smspilot' => [
+    'sms-pilot' => [
         'key'         => env('SMS_PILOT_API_KEY'),
         'sender_name' => env('SMS_PILOT_SENDER_NAME'),
     ],
@@ -109,8 +109,8 @@ class Notification extends \Illuminate\Notifications\Notification
 Имя метода  | Описание
 ----------- | --------
 `from()`    | Имя отправителя из [списка][smspilot_sender_names] (опционально)
-`to()`      | Номер телефона получателя
-`content()` | Текст сообщения уведомления
+`to()`      | Номер телефона получателя (опционально, имеет более высокий приоритет чем `routeNotificationForSmsPilot`)
+`content()` | Текст сообщения
 
 Пример нотифицируемого объекта:
 
@@ -125,9 +125,11 @@ class Notifiable
     /**
      * Get route for 'SMS Pilot' notification.
      *
+     * @param mixed $notifiable
+     *
      * @return string
      */
-    public function routeNotificationForSmsPilot()
+    public function routeNotificationForSmsPilot($notifiable)
     {
         return '71112223344';
     }

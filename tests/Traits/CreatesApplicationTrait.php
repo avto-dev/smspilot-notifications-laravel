@@ -21,7 +21,7 @@ trait CreatesApplicationTrait
 
         /** @var \Illuminate\Config\Repository $config */
         $config = $app->make('config');
-        $config->set('services.smspilot', [
+        $config->set('services.sms-pilot', [
             'key'         => env('SMS_PILOT_API_KEY'),
             'sender_name' => env('SMS_PILOT_SENDER_NAME'),
         ]);
