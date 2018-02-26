@@ -12,7 +12,7 @@ use ReflectionClass;
 trait AdditionalAssertsTrait
 {
     /**
-     * Extract protected property
+     * Extract protected property.
      *
      * @param object $object
      * @param string $property_name
