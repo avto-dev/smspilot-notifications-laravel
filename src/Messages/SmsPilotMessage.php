@@ -21,16 +21,16 @@ class SmsPilotMessage
      *
      * @var string|null
      */
-    public $phone_number;
+    public $to;
 
     /**
-     * Receiver phone number. Leave 'null' for using value from settings.
+     * Sender name. Leave 'null' for using value from settings.
      *
      * @see https://smspilot.ru/my-sender.php
      *
      * @var string|null
      */
-    public $sender_name;
+    public $from;
 
     /**
      * Static factory method.
@@ -51,7 +51,7 @@ class SmsPilotMessage
      */
     public function from($sender_name)
     {
-        $this->sender_name = (string) $sender_name;
+        $this->from = (string) $sender_name;
 
         return $this;
     }
@@ -65,7 +65,7 @@ class SmsPilotMessage
      */
     public function to($phone_number)
     {
-        $this->phone_number = (string) $phone_number;
+        $this->to = (string) $phone_number;
 
         return $this;
     }

@@ -2,7 +2,7 @@
 
 namespace AvtoDev\SmsPilotNotifications\ApiClient\Responses;
 
-use AvtoDev\SmsPilotNotifications\Messages\SentMessage;
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotSentMessage;
 
 /**
  * Class MessageSentResponse.
@@ -12,7 +12,7 @@ class MessageSentResponse extends AbstractResponse
     /**
      * Returns array of sent messages info.
      *
-     * @return SentMessage[]|array
+     * @return SmsPilotSentMessage[]|array
      */
     public function getSentMessages()
     {
@@ -58,7 +58,7 @@ class MessageSentResponse extends AbstractResponse
      *
      * @param array $message_data
      *
-     * @return SentMessage|null
+     * @return SmsPilotSentMessage|null
      */
     protected function convertRawMessageInfoIntoObject($message_data)
     {
@@ -70,7 +70,7 @@ class MessageSentResponse extends AbstractResponse
             && isset($message_data['price'])
             && isset($message_data['status'])
         ) {
-            return new SentMessage(
+            return new SmsPilotSentMessage(
                 $message_data['server_id'],
                 $message_data['phone'],
                 $message_data['price'],

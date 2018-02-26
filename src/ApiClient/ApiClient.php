@@ -48,10 +48,7 @@ class ApiClient implements ApiClientInterface
     protected $default_sender_name;
 
     /**
-     * SmsPilotApi constructor.
-     *
-     * @param string $api_key             API key
-     * @param string $default_sender_name Default sender name
+     * {@inheritdoc}
      */
     public function __construct($api_key, $default_sender_name)
     {
@@ -74,10 +71,10 @@ class ApiClient implements ApiClientInterface
                     'query' => [
                         'charset' => 'utf-8',
                         'send'    => $message->content,
-                        'to'      => $message->phone_number,
+                        'to'      => $message->to,
                         'apikey'  => $this->api_key,
-                        'from'    => ! empty($message->sender_name) && is_string($message->sender_name)
-                            ? $message->sender_name
+                        'from'    => ! empty($message->from) && is_string($message->from)
+                            ? $message->from
                             : $this->default_sender_name,
                         'format'  => 'json',
                     ],
@@ -87,19 +84,19 @@ class ApiClient implements ApiClientInterface
             throw new HttpRequestException('Cannot complete HTTP request to the SMS Pilot API', $e->getCode(), $e);
         }
 
-        $decoded_response = json_decode((string) $response->getBody(), true);
+        $decoded = json_decode((string) $response->getBody(), true);
 
-        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded_response) && ! empty($decoded_response)) {
-            if (isset($decoded_response['error'])) {
-                $code        = isset($decoded_response['error']['code'])
-                    ? (int) $decoded_response['error']['code']
+        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded) && ! empty($decoded)) {
+            if (isset($decoded['error'])) {
+                $code        = isset($decoded['error']['code']) && is_numeric($decoded['error']['code'])
+                    ? (int) $decoded['error']['code']
                     : 0;
-                $description = isset($decoded_response['error']['description'])
-                    ? (string) $decoded_response['error']['description']
-                    : 'Unavailable';
+                $description = isset($decoded['error']['description']) && is_string($decoded['error']['description'])
+                    ? $decoded['error']['description']
+                    : 'Error description unavailable';
 
                 throw new CannotSendMessage(
-                    sprintf('Server respond an error: "%s" (code: %s)', $description, $code), $code
+                    sprintf('Server respond an error: "%s" (code: %d)', $description, $code), $code
                 );
             }
 

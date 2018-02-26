@@ -30,6 +30,6 @@
     </logging>
     <php>
         <env name="SMS_PILOT_API_KEY" value="apikey_for_test_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"/>
-        <env name="SMS_PILOT_SENDER_NAME" value="Some tester name"/>
+        <env name="SMS_PILOT_SENDER_NAME" value="TestsSenderName"/>
     </php>
 </phpunit>
