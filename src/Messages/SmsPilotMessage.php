@@ -2,8 +2,8 @@
 
 namespace AvtoDev\SmsPilotNotifications\Messages;
 
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Contracts\Support\Arrayable;
 
 /**
  * Class SmsPilotMessage.

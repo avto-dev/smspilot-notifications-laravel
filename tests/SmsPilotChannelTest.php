@@ -2,17 +2,17 @@
 
 namespace AvtoDev\SmsPilotNotifications\Tests;
 
+use Mockery as m;
+use InvalidArgumentException;
+use AvtoDev\SmsPilotNotifications\SmsPilotChannel;
+use AvtoDev\SmsPilotNotifications\Tests\Stubs\Notifiable;
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
+use AvtoDev\SmsPilotNotifications\Tests\Stubs\Notification;
+use AvtoDev\SmsPilotNotifications\Tests\Stubs\NotifiableStub;
+use AvtoDev\SmsPilotNotifications\Tests\Stubs\NotificationStub;
+use AvtoDev\SmsPilotNotifications\Tests\ApiClient\ApiClientMock;
 use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 use AvtoDev\SmsPilotNotifications\Exceptions\MissingNotificationRouteException;
-use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
-use AvtoDev\SmsPilotNotifications\SmsPilotChannel;
-use AvtoDev\SmsPilotNotifications\Tests\ApiClient\ApiClientMock;
-use AvtoDev\SmsPilotNotifications\Tests\Stubs\Notifiable;
-use AvtoDev\SmsPilotNotifications\Tests\Stubs\NotifiableStub;
-use AvtoDev\SmsPilotNotifications\Tests\Stubs\Notification;
-use AvtoDev\SmsPilotNotifications\Tests\Stubs\NotificationStub;
-use InvalidArgumentException;
-use Mockery as m;
 
 /**
  * Class SmsPilotChannelTest.

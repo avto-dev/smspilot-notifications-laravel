@@ -2,11 +2,11 @@
 
 namespace AvtoDev\SmsPilotNotifications\Tests\ApiClient\Responses;
 
-use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
-use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
-use AvtoDev\SmsPilotNotifications\Messages\SmsPilotSentMessage;
-use AvtoDev\SmsPilotNotifications\Tests\AbstractTestCase;
 use GuzzleHttp\Psr7\Response;
+use AvtoDev\SmsPilotNotifications\Tests\AbstractTestCase;
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotSentMessage;
+use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
+use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 
 /**
  * Class MessageSentResponseTest.
