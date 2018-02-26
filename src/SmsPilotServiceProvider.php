@@ -4,6 +4,7 @@ namespace AvtoDev\SmsPilotNotifications;
 
 use Illuminate\Foundation\Application;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClient;
+use AvtoDev\SmsPilotNotifications\ApiClient\ApiClientInterface;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 /**
@@ -27,7 +28,7 @@ class SmsPilotServiceProvider extends IlluminateServiceProvider
     {
         $this->app
             ->when(SmsPilotChannel::class)
-            ->needs(ApiClient::class)
+            ->needs(ApiClientInterface::class)
             ->give(function (Application $app) {
                 /** @var \Illuminate\Config\Repository $config */
                 $config = $app->make('config');

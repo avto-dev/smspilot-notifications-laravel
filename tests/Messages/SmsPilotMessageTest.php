@@ -2,8 +2,8 @@
 
 namespace AvtoDev\SmsPilotNotifications\Tests\Messages;
 
-use AvtoDev\SmsPilotNotifications\Tests\AbstractTestCase;
 use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
+use AvtoDev\SmsPilotNotifications\Tests\AbstractTestCase;
 
 /**
  * Class SmsPilotMessageTest.
@@ -66,5 +66,25 @@ class SmsPilotMessageTest extends AbstractTestCase
     {
         $this->assertInstanceOf(SmsPilotMessage::class, $this->instance->to($to = '71112223344'));
         $this->assertEquals($to, $this->instance->to);
+    }
+
+    /**
+     * Test 'toArray' and 'toJson' methods.
+     *
+     * @return void
+     */
+    public function testToArrayAndToJsonMethods()
+    {
+        $this->instance
+            ->to($to = '71112223344')
+            ->content($content = "some content\nfoo\tbar");
+
+        $as_array = $this->instance->toArray();
+
+        $this->assertEquals($to, $as_array['to']);
+        $this->assertEquals($content, $as_array['content']);
+        $this->assertNull($as_array['from']);
+
+        $this->assertEquals(json_encode($as_array), $this->instance->toJson());
     }
 }

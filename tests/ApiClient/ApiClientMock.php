@@ -2,9 +2,11 @@
 
 namespace AvtoDev\SmsPilotNotifications\Tests\ApiClient;
 
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Handler\MockHandler;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClient;
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class ApiClientMock.
@@ -26,11 +28,30 @@ class ApiClientMock extends ApiClient
     public function __construct($api_key, $default_sender_name)
     {
         // Allow 3rd argument (faked responses) supports
-        if (func_num_args() >= 2) {
+        if (func_num_args() > 2) {
             $this->faked_responses = (array) func_get_arg(2);
         }
 
         parent::__construct($api_key, $default_sender_name);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function send(SmsPilotMessage $message)
+    {
+        if (empty($this->faked_responses)) {
+            $this->faked_responses = [
+                new Response(200, [], sprintf('{"send":[
+                    {"server_id":"666","phone":"%s","price":"2.26", "status":"0"}
+                    ],"balance":"28.00","cost":"2"}', $message->to)
+                ),
+            ];
+
+            $this->http_client = $this->httpClientFactory();
+        }
+
+        return parent::send($message);
     }
 
     /**

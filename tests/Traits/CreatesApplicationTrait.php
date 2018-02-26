@@ -2,8 +2,8 @@
 
 namespace AvtoDev\SmsPilotNotifications\Tests\Traits;
 
-use Illuminate\Contracts\Console\Kernel;
 use AvtoDev\SmsPilotNotifications\SmsPilotServiceProvider;
+use Illuminate\Contracts\Console\Kernel;
 
 trait CreatesApplicationTrait
 {
@@ -21,8 +21,10 @@ trait CreatesApplicationTrait
 
         /** @var \Illuminate\Config\Repository $config */
         $config = $app->make('config');
-        $config->set('services.smspilot.key', env('SMS_PILOT_API_KEY'));
-        $config->set('services.smspilot.sender_name', env('SMS_PILOT_SENDER_NAME'));
+        $config->set('services.smspilot', [
+            'key'         => env('SMS_PILOT_API_KEY'),
+            'sender_name' => env('SMS_PILOT_SENDER_NAME'),
+        ]);
 
         $app->register(SmsPilotServiceProvider::class);
 

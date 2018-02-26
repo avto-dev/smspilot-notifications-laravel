@@ -2,12 +2,15 @@
 
 namespace AvtoDev\SmsPilotNotifications\Messages;
 
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+
 /**
  * Class SmsPilotMessage.
  *
  * SMS message object for SMS Pilot notifications channel.
  */
-class SmsPilotMessage
+class SmsPilotMessage implements Jsonable, Arrayable
 {
     /**
      * The text content of the message.
@@ -82,5 +85,25 @@ class SmsPilotMessage
         $this->content = (string) $content;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toJson($options = 0)
+    {
+        return json_encode($this->toArray(), $options);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function toArray()
+    {
+        return [
+            'content' => $this->content,
+            'to'      => $this->to,
+            'from'    => $this->from,
+        ];
     }
 }

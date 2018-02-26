@@ -12,7 +12,7 @@ use AvtoDev\SmsPilotNotifications\ApiClient\ApiClientInterface as SmsPilotApiCli
 /**
  * Class SmsPilotChannel.
  *
- * Channel fo a working with SMS Pilot service.
+ * Channel for a working with SMS Pilot service.
  */
 class SmsPilotChannel
 {
@@ -46,17 +46,26 @@ class SmsPilotChannel
      */
     public function send($notifiable, Notification $notification)
     {
+        if (! $receiver_phone_number = $notifiable->routeNotificationFor('SmsPilot')) {
+            return null;
+        }
+
         if (! method_exists($notification, $route = 'toSmsPilot')) {
             throw new MissingNotificationRouteException(sprintf('Missing notification route "%s"', $route));
         }
 
         /** @var $message SmsPilotMessage */
-        if (! ($message = $notification->{$route}($notifiable) instanceof SmsPilotMessage)) {
+        if (! (($message = $notification->{$route}($notifiable)) instanceof SmsPilotMessage)) {
             throw new InvalidArgumentException(sprintf(
                 'Route "%s" must returns object with instance of "%s"',
                 $route,
                 SmsPilotMessage::class
             ));
+        }
+
+        // Overwrite 'to' property, if route to the notification does not set it
+        if (empty($message->to)) {
+            $message->to($receiver_phone_number);
         }
 
         return $this->api_client->send($message);
