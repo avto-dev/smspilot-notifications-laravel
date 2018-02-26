@@ -2,8 +2,8 @@
 
 namespace AvtoDev\SmsPilotNotifications\Tests\Messages;
 
-use AvtoDev\SmsPilotNotifications\Messages\SmsPilotSentMessage;
 use AvtoDev\SmsPilotNotifications\Tests\AbstractTestCase;
+use AvtoDev\SmsPilotNotifications\Messages\SmsPilotSentMessage;
 
 /**
  * Class SmsPilotSentMessageTest.

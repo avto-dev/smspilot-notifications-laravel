@@ -2,9 +2,9 @@
 
 namespace AvtoDev\SmsPilotNotifications\Tests\ApiClient;
 
-use AvtoDev\SmsPilotNotifications\ApiClient\ApiClient;
-use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Handler\MockHandler;
+use AvtoDev\SmsPilotNotifications\ApiClient\ApiClient;
 
 /**
  * Class ApiClientMock.
