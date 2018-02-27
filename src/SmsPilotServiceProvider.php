@@ -13,18 +13,11 @@ use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 class SmsPilotServiceProvider extends IlluminateServiceProvider
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
-
-    /**
      * Boot any application services.
      *
      * @return void
      */
-    public function boot()
+    public function register()
     {
         $this->app
             ->when(SmsPilotChannel::class)
