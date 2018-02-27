@@ -20,7 +20,7 @@
 Для установки данного пакета выполните в терминале следующую команду:
 
 ```shell
-$ composer require avto-dev/smspilot-notifications-laravel "^1.0"
+$ composer require avto-dev/smspilot-notifications-laravel "^1.0.2"
 ```
 
 > Для этого необходим установленный `composer`. Для его установки перейдите по [данной ссылке][getcomposer].
