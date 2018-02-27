@@ -20,11 +20,11 @@ class SmsPilotServiceProvider extends IlluminateServiceProvider
     protected $defer = true;
 
     /**
-     * Register any application services.
+     * Boot any application services.
      *
      * @return void
      */
-    public function register()
+    public function boot()
     {
         $this->app
             ->when(SmsPilotChannel::class)
