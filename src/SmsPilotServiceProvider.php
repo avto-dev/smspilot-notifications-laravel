@@ -7,9 +7,6 @@ use AvtoDev\SmsPilotNotifications\ApiClient\ApiClient;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClientInterface;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
-/**
- * Class SmsPilotServiceProvider.
- */
 class SmsPilotServiceProvider extends IlluminateServiceProvider
 {
     /**

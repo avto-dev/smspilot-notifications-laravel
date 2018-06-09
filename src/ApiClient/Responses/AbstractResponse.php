@@ -6,9 +6,6 @@ use Illuminate\Support\Arr;
 use Psr\Http\Message\ResponseInterface;
 use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
 
-/**
- * Class AbstractApiClientResponse.
- */
 abstract class AbstractResponse
 {
     /**
@@ -56,7 +53,7 @@ abstract class AbstractResponse
      */
     public function getBody($key = null, $default = null)
     {
-        return empty($key)
+        return $key === null
             ? $this->decoded_body
             : Arr::get($this->decoded_body, $key, $default);
     }
@@ -72,9 +69,9 @@ abstract class AbstractResponse
      */
     protected function decodeResponseBody(ResponseInterface $http_response)
     {
-        $decoded = json_decode($http_response->getBody(), true);
+        $decoded = \json_decode($http_response->getBody(), true);
 
-        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+        if (\is_array($decoded) && \json_last_error() === JSON_ERROR_NONE) {
             return $decoded;
         }
 

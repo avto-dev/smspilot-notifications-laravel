@@ -3,8 +3,6 @@
 namespace AvtoDev\SmsPilotNotifications\Messages;
 
 /**
- * Class SentMessage.
- *
  * Sent message object.
  */
 class SmsPilotSentMessage

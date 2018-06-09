@@ -10,8 +10,6 @@ use AvtoDev\SmsPilotNotifications\Exceptions\MissingNotificationRouteException;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClientInterface as SmsPilotApiClient;
 
 /**
- * Class SmsPilotChannel.
- *
  * Channel for a working with SMS Pilot service.
  */
 class SmsPilotChannel
@@ -64,7 +62,7 @@ class SmsPilotChannel
         }
 
         // Overwrite 'to' property, if route to the notification does not set it
-        if (empty($message->to)) {
+        if ($message->to === null) {
             $message->to($receiver_phone_number);
         }
 

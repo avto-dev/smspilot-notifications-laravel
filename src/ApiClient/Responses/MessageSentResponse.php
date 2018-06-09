@@ -19,7 +19,7 @@ class MessageSentResponse extends AbstractResponse
         $messages = [];
 
         foreach ((array) $this->getBody('send') as $raw_message) {
-            array_push($messages, $this->convertRawMessageInfoIntoObject($raw_message));
+            $messages[] = $this->convertRawMessageInfoIntoObject($raw_message);
         }
 
         return array_filter($messages);
@@ -34,7 +34,7 @@ class MessageSentResponse extends AbstractResponse
     {
         $balance = $this->getBody('balance');
 
-        return is_numeric($balance)
+        return \is_numeric($balance)
             ? (float) $balance
             : null;
     }
@@ -48,7 +48,7 @@ class MessageSentResponse extends AbstractResponse
     {
         $cost = $this->getBody('cost');
 
-        return is_numeric($cost)
+        return \is_numeric($cost)
             ? (float) $cost
             : null;
     }
@@ -65,10 +65,7 @@ class MessageSentResponse extends AbstractResponse
         $message_data = (array) $message_data;
 
         if (
-            isset($message_data['server_id'])
-            && isset($message_data['phone'])
-            && isset($message_data['price'])
-            && isset($message_data['status'])
+            isset($message_data['server_id'], $message_data['phone'], $message_data['price'], $message_data['status'])
         ) {
             return new SmsPilotSentMessage(
                 $message_data['server_id'],

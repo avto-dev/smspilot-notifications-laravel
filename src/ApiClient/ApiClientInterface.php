@@ -7,9 +7,6 @@ use AvtoDev\SmsPilotNotifications\Exceptions\CannotSendMessage;
 use AvtoDev\SmsPilotNotifications\Exceptions\HttpRequestException;
 use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
 
-/**
- * Interface SMSPilotApiInterface.
- */
 interface ApiClientInterface
 {
     /**

@@ -10,11 +10,6 @@ use AvtoDev\SmsPilotNotifications\Exceptions\HttpRequestException;
 use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
 use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 
-/**
- * Class SmsPilotApi.
- *
- * SMS Pilot API service.
- */
 class ApiClient implements ApiClientInterface
 {
     /**
@@ -73,7 +68,7 @@ class ApiClient implements ApiClientInterface
                         'send'    => $message->content,
                         'to'      => $message->to,
                         'apikey'  => $this->api_key,
-                        'from'    => ! empty($message->from) && is_string($message->from)
+                        'from'    => $message->from !== null && \is_string($message->from)
                             ? $message->from
                             : $this->default_sender_name,
                         'format'  => 'json',
@@ -84,15 +79,15 @@ class ApiClient implements ApiClientInterface
             throw new HttpRequestException('Cannot complete HTTP request to the SMS Pilot API', $e->getCode(), $e);
         }
 
-        $decoded = json_decode((string) $response->getBody(), true);
+        $data = \json_decode((string) $response->getBody(), true);
 
-        if (json_last_error() === JSON_ERROR_NONE && is_array($decoded) && ! empty($decoded)) {
-            if (isset($decoded['error'])) {
-                $code        = isset($decoded['error']['code']) && is_numeric($decoded['error']['code'])
-                    ? (int) $decoded['error']['code']
+        if (\is_array($data) && ! empty($data) && \json_last_error() === JSON_ERROR_NONE) {
+            if (isset($data['error'])) {
+                $code        = isset($data['error']['code']) && \is_numeric($code = $data['error']['code'])
+                    ? (int) $code
                     : 0;
-                $description = isset($decoded['error']['description']) && is_string($decoded['error']['description'])
-                    ? $decoded['error']['description']
+                $description = isset($data['error']['description']) && \is_string($desc = $data['error']['description'])
+                    ? $desc
                     : 'Error description unavailable';
 
                 throw new CannotSendMessage(
@@ -101,9 +96,9 @@ class ApiClient implements ApiClientInterface
             }
 
             return new MessageSentResponse($response);
-        } else {
-            throw new InvalidResponseException('We\'v got invalid server response (invalid JSON)');
         }
+
+        throw new InvalidResponseException('We\'v got invalid server response (invalid JSON)');
     }
 
     /**
@@ -115,7 +110,7 @@ class ApiClient implements ApiClientInterface
      */
     protected function httpClientFactory(array $http_client_config = [])
     {
-        return new GuzzleHttpClient(array_replace_recursive([
+        return new GuzzleHttpClient(\array_replace_recursive([
             'timeout'         => 25,
             'connect_timeout' => 25,
         ], $http_client_config));

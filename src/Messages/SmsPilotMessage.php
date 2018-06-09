@@ -5,11 +5,6 @@ namespace AvtoDev\SmsPilotNotifications\Messages;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Arrayable;
 
-/**
- * Class SmsPilotMessage.
- *
- * SMS message object for SMS Pilot notifications channel.
- */
 class SmsPilotMessage implements Jsonable, Arrayable
 {
     /**
@@ -37,6 +32,8 @@ class SmsPilotMessage implements Jsonable, Arrayable
 
     /**
      * Static factory method.
+     *
+     * @param mixed ...$arguments
      *
      * @return static|self
      */
