@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Tests\Messages;
 
 use AvtoDev\SmsPilotNotifications\Tests\AbstractTestCase;
 use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 
 /**
- * Class SmsPilotMessageTest.
+ * @covers \AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage<extended>
  */
 class SmsPilotMessageTest extends AbstractTestCase
 {
@@ -16,21 +18,11 @@ class SmsPilotMessageTest extends AbstractTestCase
     protected $instance;
 
     /**
-     * {@inheritdoc}
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->instance = new SmsPilotMessage;
-    }
-
-    /**
      * Test static factory method.
      *
      * @return void
      */
-    public function testCreateMethod()
+    public function testCreateMethod(): void
     {
         $this->assertInstanceOf(SmsPilotMessage::class, SmsPilotMessage::create());
     }
@@ -40,7 +32,7 @@ class SmsPilotMessageTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testContentDataAccessors()
+    public function testContentDataAccessors(): void
     {
         $this->assertInstanceOf(SmsPilotMessage::class, $this->instance->content($content = "some content\nfoo\tbar"));
         $this->assertEquals($content, $this->instance->content);
@@ -51,7 +43,7 @@ class SmsPilotMessageTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testFromDataAccessors()
+    public function testFromDataAccessors(): void
     {
         $this->assertInstanceOf(SmsPilotMessage::class, $this->instance->from($from = 'sender name'));
         $this->assertEquals($from, $this->instance->from);
@@ -62,7 +54,7 @@ class SmsPilotMessageTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testToDataAccessors()
+    public function testToDataAccessors(): void
     {
         $this->assertInstanceOf(SmsPilotMessage::class, $this->instance->to($to = '71112223344'));
         $this->assertEquals($to, $this->instance->to);
@@ -73,7 +65,7 @@ class SmsPilotMessageTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testToArrayAndToJsonMethods()
+    public function testToArrayAndToJsonMethods(): void
     {
         $this->instance
             ->to($to = '71112223344')
@@ -86,5 +78,15 @@ class SmsPilotMessageTest extends AbstractTestCase
         $this->assertNull($as_array['from']);
 
         $this->assertEquals(json_encode($as_array), $this->instance->toJson());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->instance = new SmsPilotMessage;
     }
 }

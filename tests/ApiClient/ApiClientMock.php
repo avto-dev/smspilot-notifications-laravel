@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Tests\ApiClient;
 
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\Client as GuzzleHttpClient;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClient;
 use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
+use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 
-/**
- * Class ApiClientMock.
- *
- * Mocked API client class.
- */
 class ApiClientMock extends ApiClient
 {
     /**
@@ -25,7 +24,7 @@ class ApiClientMock extends ApiClient
      *
      * @param mixed[] Faked responses
      */
-    public function __construct($api_key, $default_sender_name)
+    public function __construct(string $api_key, string $default_sender_name)
     {
         // Allow 3rd argument (faked responses) supports
         if (func_num_args() > 2) {
@@ -38,7 +37,7 @@ class ApiClientMock extends ApiClient
     /**
      * {@inheritdoc}
      */
-    public function send(SmsPilotMessage $message)
+    public function send(SmsPilotMessage $message): MessageSentResponse
     {
         if (empty($this->faked_responses)) {
             $this->faked_responses = [
@@ -57,7 +56,7 @@ class ApiClientMock extends ApiClient
     /**
      * {@inheritdoc}
      */
-    protected function httpClientFactory(array $http_client_config = [])
+    protected function httpClientFactory(array $http_client_config = []): GuzzleHttpClient
     {
         $mock    = new MockHandler($this->faked_responses);
         $handler = HandlerStack::create($mock);

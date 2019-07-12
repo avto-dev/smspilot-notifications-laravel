@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Messages;
 
 use Illuminate\Contracts\Support\Jsonable;
@@ -33,13 +35,11 @@ class SmsPilotMessage implements Jsonable, Arrayable
     /**
      * Static factory method.
      *
-     * @param mixed ...$arguments
-     *
-     * @return static|self
+     * @return static
      */
-    public static function create(...$arguments)
+    public static function create(): self
     {
-        return new static(...$arguments);
+        return new static;
     }
 
     /**
@@ -47,11 +47,11 @@ class SmsPilotMessage implements Jsonable, Arrayable
      *
      * @param string $sender_name
      *
-     * @return static|self
+     * @return $this
      */
-    public function from($sender_name)
+    public function from(string $sender_name): self
     {
-        $this->from = (string) $sender_name;
+        $this->from = $sender_name;
 
         return $this;
     }
@@ -61,11 +61,11 @@ class SmsPilotMessage implements Jsonable, Arrayable
      *
      * @param string $phone_number
      *
-     * @return static|self
+     * @return $this
      */
-    public function to($phone_number)
+    public function to(string $phone_number): self
     {
-        $this->to = (string) $phone_number;
+        $this->to = $phone_number;
 
         return $this;
     }
@@ -75,11 +75,11 @@ class SmsPilotMessage implements Jsonable, Arrayable
      *
      * @param string $content
      *
-     * @return static|self
+     * @return $this
      */
-    public function content($content)
+    public function content(string $content): self
     {
-        $this->content = (string) $content;
+        $this->content = $content;
 
         return $this;
     }
@@ -87,15 +87,15 @@ class SmsPilotMessage implements Jsonable, Arrayable
     /**
      * {@inheritdoc}
      */
-    public function toJson($options = 0)
+    public function toJson($options = 0): string
     {
-        return json_encode($this->toArray(), $options);
+        return (string) \json_encode($this->toArray(), $options);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'content' => $this->content,

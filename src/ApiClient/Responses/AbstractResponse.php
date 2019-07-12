@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\ApiClient\Responses;
 
 use Illuminate\Support\Arr;
@@ -36,7 +38,7 @@ abstract class AbstractResponse
      *
      * @return ResponseInterface
      */
-    public function getHttpResponse()
+    public function getHttpResponse(): ResponseInterface
     {
         return $this->http_response;
     }
@@ -51,7 +53,7 @@ abstract class AbstractResponse
      *
      * @return array|mixed
      */
-    public function getBody($key = null, $default = null)
+    public function getBody(?string $key = null, $default = null)
     {
         return $key === null
             ? $this->decoded_body
@@ -67,9 +69,9 @@ abstract class AbstractResponse
      *
      * @return array
      */
-    protected function decodeResponseBody(ResponseInterface $http_response)
+    protected function decodeResponseBody(ResponseInterface $http_response): array
     {
-        $decoded = \json_decode($http_response->getBody(), true);
+        $decoded = \json_decode((string) $http_response->getBody(), true);
 
         if (\is_array($decoded) && \json_last_error() === JSON_ERROR_NONE) {
             return $decoded;

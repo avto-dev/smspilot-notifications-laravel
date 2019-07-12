@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Tests\Traits;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Contracts\Console\Kernel;
 use AvtoDev\SmsPilotNotifications\SmsPilotServiceProvider;
 
@@ -10,7 +13,7 @@ trait CreatesApplicationTrait
     /**
      * Creates the application.
      *
-     * @return \Illuminate\Foundation\Application
+     * @return Application
      */
     public function createApplication()
     {

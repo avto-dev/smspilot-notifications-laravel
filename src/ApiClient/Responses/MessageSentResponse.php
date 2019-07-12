@@ -1,12 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\ApiClient\Responses;
 
 use AvtoDev\SmsPilotNotifications\Messages\SmsPilotSentMessage;
 
-/**
- * Class MessageSentResponse.
- */
 class MessageSentResponse extends AbstractResponse
 {
     /**
@@ -14,7 +13,7 @@ class MessageSentResponse extends AbstractResponse
      *
      * @return SmsPilotSentMessage[]|array
      */
-    public function getSentMessages()
+    public function getSentMessages(): array
     {
         $messages = [];
 
@@ -22,7 +21,7 @@ class MessageSentResponse extends AbstractResponse
             $messages[] = $this->convertRawMessageInfoIntoObject($raw_message);
         }
 
-        return array_filter($messages);
+        return \array_filter($messages);
     }
 
     /**
@@ -30,7 +29,7 @@ class MessageSentResponse extends AbstractResponse
      *
      * @return float|null
      */
-    public function getBalance()
+    public function getBalance(): ?float
     {
         $balance = $this->getBody('balance');
 
@@ -44,7 +43,7 @@ class MessageSentResponse extends AbstractResponse
      *
      * @return float|null
      */
-    public function getCost()
+    public function getCost(): ?float
     {
         $cost = $this->getBody('cost');
 
@@ -60,19 +59,19 @@ class MessageSentResponse extends AbstractResponse
      *
      * @return SmsPilotSentMessage|null
      */
-    protected function convertRawMessageInfoIntoObject($message_data)
+    protected function convertRawMessageInfoIntoObject(array $message_data): ?SmsPilotSentMessage
     {
-        $message_data = (array) $message_data;
-
         if (
             isset($message_data['server_id'], $message_data['phone'], $message_data['price'], $message_data['status'])
         ) {
             return new SmsPilotSentMessage(
-                $message_data['server_id'],
-                $message_data['phone'],
-                $message_data['price'],
-                $message_data['status']
+                (int) $message_data['server_id'],
+                (string) $message_data['phone'],
+                (float) $message_data['price'],
+                (int) $message_data['status']
             );
         }
+
+        return null;
     }
 }

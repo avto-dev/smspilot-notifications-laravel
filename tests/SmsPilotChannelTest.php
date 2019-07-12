@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Tests;
 
 use Mockery as m;
@@ -15,7 +17,7 @@ use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 use AvtoDev\SmsPilotNotifications\Exceptions\MissingNotificationRouteException;
 
 /**
- * Class SmsPilotChannelTest.
+ * @covers \AvtoDev\SmsPilotNotifications\SmsPilotChannel<extended>
  */
 class SmsPilotChannelTest extends AbstractTestCase
 {
@@ -24,7 +26,7 @@ class SmsPilotChannelTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testNotificationSending()
+    public function testNotificationSending(): void
     {
         $notifiable   = new NotifiableStub;
         $notification = new NotificationStub;
@@ -43,7 +45,7 @@ class SmsPilotChannelTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testNotificationExceptionOnSenderWithoutRoute()
+    public function testNotificationExceptionOnSenderWithoutRoute(): void
     {
         $this->expectException(MissingNotificationRouteException::class);
         $this->expectExceptionMessageRegExp('~Missing notification route~i');
@@ -59,7 +61,7 @@ class SmsPilotChannelTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testNotificationExceptionOnNotificationInvalidRoute()
+    public function testNotificationExceptionOnNotificationInvalidRoute(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessageRegExp('~must returns object with instance~i');
@@ -73,7 +75,8 @@ class SmsPilotChannelTest extends AbstractTestCase
             ->once()
             ->andReturnUsing(function () {
                 return new \stdClass;
-            });
+            })
+            ->getMock();
 
         $channel->send(new NotifiableStub, $notification);
     }
@@ -83,7 +86,7 @@ class SmsPilotChannelTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testNotificationReturnsNullOnNotifiableWithoutRoute()
+    public function testNotificationReturnsNullOnNotifiableWithoutRoute(): void
     {
         $api_client = new ApiClientMock('foo', 'bar');
         $channel    = new SmsPilotChannel($api_client);
@@ -96,7 +99,7 @@ class SmsPilotChannelTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testNotificationReceiverOverwriting()
+    public function testNotificationReceiverOverwriting(): void
     {
         $to           = '78887778877';
         $notifiable   = new NotifiableStub;

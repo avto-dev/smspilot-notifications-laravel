@@ -1,27 +1,30 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications;
 
-use Illuminate\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClient;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClientInterface;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 class SmsPilotServiceProvider extends IlluminateServiceProvider
 {
     /**
-     * Boot any application services.
+     * Register package services.
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app
             ->when(SmsPilotChannel::class)
             ->needs(ApiClientInterface::class)
-            ->give(function (Application $app) {
-                /** @var \Illuminate\Config\Repository $config */
-                $config = $app->make('config');
+            ->give(function (Container $app) {
+                /** @var ConfigRepository $config */
+                $config = $app->make(ConfigRepository::class);
 
                 return new ApiClient(
                     $config->get('services.sms-pilot.key'),
