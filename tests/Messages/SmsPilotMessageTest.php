@@ -18,6 +18,16 @@ class SmsPilotMessageTest extends AbstractTestCase
     protected $instance;
 
     /**
+     * {@inheritdoc}
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->instance = new SmsPilotMessage;
+    }
+
+    /**
      * Test static factory method.
      *
      * @return void
@@ -78,15 +88,5 @@ class SmsPilotMessageTest extends AbstractTestCase
         $this->assertNull($as_array['from']);
 
         $this->assertEquals(json_encode($as_array), $this->instance->toJson());
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->instance = new SmsPilotMessage;
     }
 }

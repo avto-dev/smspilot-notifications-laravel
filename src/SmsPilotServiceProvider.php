@@ -6,8 +6,8 @@ namespace AvtoDev\SmsPilotNotifications;
 
 use Illuminate\Contracts\Container\Container;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClient;
-use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClientInterface;
+use Illuminate\Contracts\Config\Repository as ConfigRepository;
 use Illuminate\Support\ServiceProvider as IlluminateServiceProvider;
 
 class SmsPilotServiceProvider extends IlluminateServiceProvider
