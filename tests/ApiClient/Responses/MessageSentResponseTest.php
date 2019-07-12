@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Tests\ApiClient\Responses;
 
 use GuzzleHttp\Psr7\Response;
@@ -9,7 +11,7 @@ use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
 use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 
 /**
- * Class MessageSentResponseTest.
+ * @covers \AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse<extended>
  */
 class MessageSentResponseTest extends AbstractTestCase
 {
@@ -18,7 +20,7 @@ class MessageSentResponseTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetHttpResponse()
+    public function testGetHttpResponse(): void
     {
         $response = new Response(200, ['foo' => 'bar'], '{}');
         $instance = new MessageSentResponse($response);
@@ -31,7 +33,7 @@ class MessageSentResponseTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testExceptionWithInvalidJsonPassedIntoConstructor()
+    public function testExceptionWithInvalidJsonPassedIntoConstructor(): void
     {
         $this->expectException(InvalidResponseException::class);
         $this->expectExceptionMessageRegExp('~Cannot decode~i');
@@ -44,7 +46,7 @@ class MessageSentResponseTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetBody()
+    public function testGetBody(): void
     {
         $response = new Response(200, [], '{"foobar":"bar foo","some":{"inside":"key"}}');
         $instance = new MessageSentResponse($response);
@@ -60,7 +62,7 @@ class MessageSentResponseTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testDataAccessors()
+    public function testDataAccessors(): void
     {
         $response = new Response(200, ['foo' => 'bar'], json_encode([
             'send'    => [

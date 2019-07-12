@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Messages;
 
-/**
- * Sent message object.
- */
 class SmsPilotSentMessage
 {
     /**
@@ -43,12 +42,12 @@ class SmsPilotSentMessage
      * @param float  $price
      * @param int    $status_code
      */
-    public function __construct($server_id, $phone, $price, $status_code)
+    public function __construct(int $server_id, string $phone, float $price, int $status_code)
     {
-        $this->server_id   = (int) $server_id;
-        $this->phone       = (string) $phone;
-        $this->price       = (float) $price;
-        $this->status_code = (int) $status_code;
+        $this->server_id   = $server_id;
+        $this->phone       = $phone;
+        $this->price       = $price;
+        $this->status_code = $status_code;
     }
 
     /**
@@ -58,9 +57,9 @@ class SmsPilotSentMessage
      *
      * @return string
      */
-    public static function convertStatusCodeIntoMessage($status_code = null)
+    public static function convertStatusCodeIntoMessage(?int $status_code): string
     {
-        switch ((int) $status_code) {
+        switch ($status_code) {
             case -2:
                 return 'Error (invalid message length or phone number)';
             case -1:
@@ -83,7 +82,7 @@ class SmsPilotSentMessage
      *
      * @return int
      */
-    public function getServerId()
+    public function getServerId(): int
     {
         return $this->server_id;
     }
@@ -93,7 +92,7 @@ class SmsPilotSentMessage
      *
      * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -103,7 +102,7 @@ class SmsPilotSentMessage
      *
      * @return float
      */
-    public function getPrice()
+    public function getPrice(): float
     {
         return $this->price;
     }
@@ -113,7 +112,7 @@ class SmsPilotSentMessage
      *
      * @return int
      */
-    public function getStatusCode()
+    public function getStatusCode(): int
     {
         return $this->status_code;
     }
@@ -123,7 +122,7 @@ class SmsPilotSentMessage
      *
      * @return string
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return self::convertStatusCodeIntoMessage($this->getStatusCode());
     }

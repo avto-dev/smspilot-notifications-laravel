@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Tests\ApiClient;
 
 use GuzzleHttp\Psr7\Response;
@@ -10,7 +12,7 @@ use AvtoDev\SmsPilotNotifications\Exceptions\HttpRequestException;
 use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
 
 /**
- * Class ApiClientTest.
+ * @covers \AvtoDev\SmsPilotNotifications\ApiClient\ApiClient<extended>
  */
 class ApiClientTest extends AbstractTestCase
 {
@@ -19,7 +21,7 @@ class ApiClientTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSendWithWrongJsonResponse()
+    public function testSendWithWrongJsonResponse(): void
     {
         $this->expectException(InvalidResponseException::class);
 
@@ -35,7 +37,7 @@ class ApiClientTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSendWitEmptyJsonResponse()
+    public function testSendWitEmptyJsonResponse(): void
     {
         $this->expectException(InvalidResponseException::class);
 
@@ -51,7 +53,7 @@ class ApiClientTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSendWithWrongServerError()
+    public function testSendWithWrongServerError(): void
     {
         $this->expectException(HttpRequestException::class);
         $this->expectExceptionCode(501);
@@ -68,7 +70,7 @@ class ApiClientTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSendWithResponseContainsError()
+    public function testSendWithResponseContainsError(): void
     {
         $this->expectException(CannotSendMessage::class);
         $this->expectExceptionCode(666);
@@ -86,7 +88,7 @@ class ApiClientTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSendWithResponseContainsWrongError()
+    public function testSendWithResponseContainsWrongError(): void
     {
         $this->expectException(CannotSendMessage::class);
         $this->expectExceptionCode(0);
@@ -104,7 +106,7 @@ class ApiClientTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSendWithNormalResponse()
+    public function testSendWithNormalResponse(): void
     {
         $client = new ApiClientMock('foo', 'bar', [
             new Response(200, [], sprintf(

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications;
 
 use InvalidArgumentException;
@@ -9,9 +11,6 @@ use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 use AvtoDev\SmsPilotNotifications\Exceptions\MissingNotificationRouteException;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClientInterface as SmsPilotApiClient;
 
-/**
- * Channel for a working with SMS Pilot service.
- */
 class SmsPilotChannel
 {
     /**
@@ -42,10 +41,10 @@ class SmsPilotChannel
      *
      * @return MessageSentResponse|null
      */
-    public function send($notifiable, Notification $notification)
+    public function send($notifiable, Notification $notification): ?MessageSentResponse
     {
         if (! $receiver_phone_number = $notifiable->routeNotificationFor('SmsPilot')) {
-            return;
+            return null;
         }
 
         if (! method_exists($notification, $route = 'toSmsPilot')) {
@@ -54,7 +53,7 @@ class SmsPilotChannel
 
         /** @var $message SmsPilotMessage */
         if (! (($message = $notification->{$route}($notifiable)) instanceof SmsPilotMessage)) {
-            throw new InvalidArgumentException(sprintf(
+            throw new InvalidArgumentException(\sprintf(
                 'Route "%s" must returns object with instance of "%s"',
                 $route,
                 SmsPilotMessage::class

@@ -1,12 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Tests\Stubs;
 
 use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 
-/**
- * Class NotificationStub.
- */
 class NotificationStub extends Notification
 {
     /**

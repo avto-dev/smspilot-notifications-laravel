@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Tests\Traits;
 
 use ReflectionClass;
 
 /**
- * Trait AdditionalAssertsTrait.
- *
  * Trait with additional asserts methods.
  */
 trait AdditionalAssertsTrait

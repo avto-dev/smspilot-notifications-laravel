@@ -2,44 +2,61 @@
   <img src="https://laravel.com/assets/img/components/logo-laravel.svg" alt="Laravel" width="240" />
 </p>
 
-# Канал уведомлений для сервиса "SMS Pilot"
+> Here's the latest documentation on Laravel Notifications System: https://laravel.com/docs/master/notifications
+
+# SMS Pilot notifications channel <sub><sup>| For laravel</sup></sub>
 
 [![Version][badge_packagist_version]][link_packagist]
 [![Version][badge_php_version]][link_packagist]
 [![Build Status][badge_build_status]][link_build_status]
 [![Coverage][badge_coverage]][link_coverage]
-[![Code quality][badge_code_quality]][link_code_quality]
 [![Downloads count][badge_downloads_count]][link_packagist]
 [![License][badge_license]][link_license]
 
-Используя данный канал для уведомлений вы сможете легко интегрировать SMS уведомления в ваше Laravel-приложение, для отправки которых используется сервис "[SMS Pilot][smspilot_home]".
+This package makes it easy to send notifications using [SMS Pilot][smspilot_home] with Laravel 5.
 
-## Установка
+## Installation
 
-Для установки данного пакета выполните в терминале следующую команду:
+Require this package with composer using the following command:
 
-```shell
-$ composer require avto-dev/smspilot-notifications-laravel "^1.0.2"
+```bash
+$ composer require avto-dev/smspilot-notifications-laravel "^2.0"
 ```
 
-> Для этого необходим установленный `composer`. Для его установки перейдите по [данной ссылке][getcomposer].
+> Installed `composer` is required ([how to install composer][getcomposer]).
 
-> Обратите внимание на то, что необходимо фиксировать мажорную версию устанавливаемого пакета.
+> You need to fix the major version of package.
 
-Если вы используете Laravel версии 5.5 и выше, то сервис-провайдер данного пакета будет зарегистрирован автоматически. В противном случае вам необходимо самостоятельно зарегистрировать сервис-провайдер в секции `providers` файла `./config/app.php`:
+Laravel 5.5 and above uses Package Auto-Discovery, so doesn't require you to manually register the service-provider. Otherwise you must add the service provider to the `providers` array in `./config/app.php`:
 
 ```php
 'providers' => [
     // ...
     AvtoDev\SmsPilotNotifications\SmsPilotServiceProvider::class,
-]
+],
 ```
 
-## Настройка
+If you wants to disable package service-provider auto discover, just add into your `composer.json` next lines:
 
-После установки вам необходимо изменить файл `./config/services.php`, добавив в него следующие строки:
+```json
+{
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+                "avto-dev/smspilot-notifications-laravel"
+            ]
+        }
+    }
+}
+```
+
+## Setting up the SMS Pilot service
+
+You need to set up SMS Pilot channel in config file `./config/services.php`:
 
 ```php
+<?php
+
 return [
  
     // ...
@@ -52,28 +69,25 @@ return [
 ];
 ```
 
-И добавить в файл `./.env`:
+And add into `./.env` file next lines:
 
 ```ini
 SMS_PILOT_API_KEY=%your_api_key%
 SMS_PILOT_SENDER_NAME=%your_sender_name%
 ```
 
-Где `SMS_PILOT_API_KEY` - это ключ (токен) авторизации на сервисе SMS Pilot (получить его вы можете [на данной странице][smspilot_get_api_key]), а `SMS_PILOT_SENDER_NAME` - это имя отправителя, которое установлено в [панели управления][smspilot_sender_names] (будет использоваться как имя отправителя по умолчанию).
+Where `SMS_PILOT_API_KEY` is SMS Pilot authorization key (token) (try to get it on [this page][smspilot_get_api_key]), `SMS_PILOT_SENDER_NAME` - is sender name, which set in [service dashboard][smspilot_sender_names] _(will be used as sender name by default)_.
 
-## Использование
+## Usage
 
-> Ознакомиться с тем, как работают нотификации в Laravel-приложениях вы можете [по этой ссылке][laravel_notifications].
-
-Базовый пример отправки уведомления может выглядеть следующим образом:
+Now you can use the channel in your `via()` method inside the notification as well as send a push notification:
 
 ```php
+<?php
+
 use AvtoDev\SmsPilotNotifications\SmsPilotChannel;
 use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 
-/**
- * Notification object.
- */
 class Notification extends \Illuminate\Notifications\Notification
 {
     /**
@@ -95,7 +109,7 @@ class Notification extends \Illuminate\Notifications\Notification
      *
      * @return SmsPilotMessage
      */
-    public function toSmsPilot($notifiable)
+    public function toSmsPilot($notifiable): SmsPilotMessage
     {
         return SmsPilotMessage::create()
             ->content('Some SMS notification message');
@@ -103,20 +117,10 @@ class Notification extends \Illuminate\Notifications\Notification
 }
 ```
 
-Доступные к использованию методы у объекта `SmsPilotMessage`:
-
-Имя метода  | Описание
------------ | --------
-`from()`    | Имя отправителя из [списка][smspilot_sender_names] (опционально)
-`to()`      | Номер телефона получателя (опционально, имеет более высокий приоритет чем `routeNotificationForSmsPilot`)
-`content()` | Текст сообщения
-
-Пример нотифицируемого объекта:
 
 ```php
-/**
- * Notifiable object.
- */
+<?php
+
 class Notifiable
 {
     use \Illuminate\Notifications\Notifiable;
@@ -128,7 +132,7 @@ class Notifiable
      *
      * @return string
      */
-    public function routeNotificationForSmsPilot($notifiable)
+    public function routeNotificationForSmsPilot($notifiable): string
     {
         return '71112223344';
     }
@@ -137,12 +141,12 @@ class Notifiable
 
 ### Testing
 
-For package testing we use `phpunit` framework. Just write into your terminal:
+For package testing we use `phpunit` framework and `docker-ce` + `docker-compose` as develop environment. So, just write into your terminal after repository cloning:
 
 ```shell
-$ git clone git@github.com:avto-dev/smspilot-notifications-laravel.git ./smspilot-notifications-laravel && cd $_
-$ composer install
-$ composer test
+$ make build
+$ make latest # or 'make lowest'
+$ make test
 ```
 
 ## Changes log
@@ -166,7 +170,6 @@ This is open-sourced software licensed under the [MIT License][link_license].
 [badge_packagist_version]:https://img.shields.io/packagist/v/avto-dev/smspilot-notifications-laravel.svg?maxAge=180
 [badge_php_version]:https://img.shields.io/packagist/php-v/avto-dev/smspilot-notifications-laravel.svg?longCache=true
 [badge_build_status]:https://travis-ci.org/avto-dev/smspilot-notifications-laravel.svg?branch=master
-[badge_code_quality]:https://img.shields.io/scrutinizer/g/avto-dev/smspilot-notifications-laravel.svg?maxAge=180
 [badge_coverage]:https://img.shields.io/codecov/c/github/avto-dev/smspilot-notifications-laravel/master.svg?maxAge=60
 [badge_downloads_count]:https://img.shields.io/packagist/dt/avto-dev/smspilot-notifications-laravel.svg?maxAge=180
 [badge_license]:https://img.shields.io/packagist/l/avto-dev/smspilot-notifications-laravel.svg?longCache=true
@@ -179,7 +182,6 @@ This is open-sourced software licensed under the [MIT License][link_license].
 [link_build_status]:https://travis-ci.org/avto-dev/smspilot-notifications-laravel
 [link_coverage]:https://codecov.io/gh/avto-dev/smspilot-notifications-laravel/
 [link_changes_log]:https://github.com/avto-dev/smspilot-notifications-laravel/blob/master/CHANGELOG.md
-[link_code_quality]:https://scrutinizer-ci.com/g/avto-dev/smspilot-notifications-laravel/
 [link_issues]:https://github.com/avto-dev/smspilot-notifications-laravel/issues
 [link_create_issue]:https://github.com/avto-dev/smspilot-notifications-laravel/issues/new/choose
 [link_commits]:https://github.com/avto-dev/smspilot-notifications-laravel/commits

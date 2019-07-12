@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\Tests\Messages;
 
 use AvtoDev\SmsPilotNotifications\Tests\AbstractTestCase;
 use AvtoDev\SmsPilotNotifications\Messages\SmsPilotSentMessage;
 
 /**
- * Class SmsPilotSentMessageTest.
+ * @covers \AvtoDev\SmsPilotNotifications\Messages\SmsPilotSentMessage<extended>
  */
 class SmsPilotSentMessageTest extends AbstractTestCase
 {
@@ -15,7 +17,7 @@ class SmsPilotSentMessageTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConstructor()
+    public function testConstructor(): void
     {
         $instance = new SmsPilotSentMessage(
             $server_id = 1,
@@ -36,7 +38,7 @@ class SmsPilotSentMessageTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConvertStatusCodeIntoMessage()
+    public function testConvertStatusCodeIntoMessage(): void
     {
         $map = [
             -2 => 'Error (invalid message length or phone number)',

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AvtoDev\SmsPilotNotifications\ApiClient;
 
 use Exception;
+use GuzzleHttp\RequestOptions;
 use GuzzleHttp\Client as GuzzleHttpClient;
 use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 use AvtoDev\SmsPilotNotifications\Exceptions\CannotSendMessage;
@@ -45,10 +48,10 @@ class ApiClient implements ApiClientInterface
     /**
      * {@inheritdoc}
      */
-    public function __construct($api_key, $default_sender_name)
+    public function __construct(string $api_key, string $default_sender_name)
     {
-        $this->api_key             = (string) $api_key;
-        $this->default_sender_name = (string) $default_sender_name;
+        $this->api_key             = $api_key;
+        $this->default_sender_name = $default_sender_name;
 
         $this->http_client = $this->httpClientFactory();
     }
@@ -56,7 +59,7 @@ class ApiClient implements ApiClientInterface
     /**
      * {@inheritdoc}
      */
-    public function send(SmsPilotMessage $message)
+    public function send(SmsPilotMessage $message): MessageSentResponse
     {
         try {
             $response = $this->http_client->request(
@@ -68,7 +71,7 @@ class ApiClient implements ApiClientInterface
                         'send'    => $message->content,
                         'to'      => $message->to,
                         'apikey'  => $this->api_key,
-                        'from'    => $message->from !== null && \is_string($message->from)
+                        'from'    => \is_string($message->from)
                             ? $message->from
                             : $this->default_sender_name,
                         'format'  => 'json',
@@ -91,7 +94,7 @@ class ApiClient implements ApiClientInterface
                     : 'Error description unavailable';
 
                 throw new CannotSendMessage(
-                    sprintf('Server respond an error: "%s" (code: %d)', $description, $code), $code
+                    \sprintf('Server respond an error: "%s" (code: %d)', $description, $code), $code
                 );
             }
 
@@ -108,11 +111,11 @@ class ApiClient implements ApiClientInterface
      *
      * @return GuzzleHttpClient
      */
-    protected function httpClientFactory(array $http_client_config = [])
+    protected function httpClientFactory(array $http_client_config = []): GuzzleHttpClient
     {
-        return new GuzzleHttpClient(\array_replace_recursive([
-            'timeout'         => 25,
-            'connect_timeout' => 25,
+        return new GuzzleHttpClient((array) \array_replace([
+            RequestOptions::TIMEOUT         => 25,
+            RequestOptions::CONNECT_TIMEOUT => 25,
         ], $http_client_config));
     }
 }
