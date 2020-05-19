@@ -107,7 +107,7 @@ class ApiClient implements ApiClientInterface
     /**
      * HTTP Client factory.
      *
-     * @param array $http_client_config
+     * @param array<string, mixed> $http_client_config
      *
      * @return GuzzleHttpClient
      */

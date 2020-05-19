@@ -1,0 +1,9 @@
+parameters:
+  level: 'max'
+  ignoreErrors:
+    - # unsafe static usage
+      message: '#Unsafe usage of new static\(\)\.#'
+      paths:
+        - src/Messages/SmsPilotMessage.php
+  paths:
+    - src

@@ -55,7 +55,7 @@ class MessageSentResponse extends AbstractResponse
     /**
      * Convert RAW message data (passed as an array) into object.
      *
-     * @param array $message_data
+     * @param array<mixed> $message_data
      *
      * @return SmsPilotSentMessage|null
      */
