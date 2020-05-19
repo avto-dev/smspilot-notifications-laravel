@@ -94,6 +94,8 @@ class SmsPilotMessage implements Jsonable, Arrayable
 
     /**
      * {@inheritdoc}
+     *
+     * @return array{content: ?string, to: ?string, from: ?string}
      */
     public function toArray(): array
     {

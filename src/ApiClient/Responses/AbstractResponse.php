@@ -18,7 +18,7 @@ abstract class AbstractResponse
     /**
      * Decoded response body.
      *
-     * @var array
+     * @var array<mixed>
      */
     protected $decoded_body;
 
@@ -67,7 +67,7 @@ abstract class AbstractResponse
      *
      * @throws InvalidResponseException
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function decodeResponseBody(ResponseInterface $http_response): array
     {
