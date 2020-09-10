@@ -74,7 +74,7 @@ class ApiClientTest extends AbstractTestCase
     {
         $this->expectException(CannotSendMessage::class);
         $this->expectExceptionCode(666);
-        $this->expectExceptionMessageRegExp('/Error desc.*666/i');
+        $this->expectExceptionMessageMatches('/Error desc.*666/i');
 
         $client = new ApiClientMock('foo', 'bar', [
             new Response(200, [], '{"error":{"code":666,"description":"Error desc"}}'),
@@ -92,7 +92,7 @@ class ApiClientTest extends AbstractTestCase
     {
         $this->expectException(CannotSendMessage::class);
         $this->expectExceptionCode(0);
-        $this->expectExceptionMessageRegExp('/Unavailable.*code.*0/i');
+        $this->expectExceptionMessageMatches('/Unavailable.*code.*0/i');
 
         $client = new ApiClientMock('foo', 'bar', [
             new Response(200, [], '{"error":{"code":false,"description":false}}'),

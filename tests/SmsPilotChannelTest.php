@@ -48,7 +48,7 @@ class SmsPilotChannelTest extends AbstractTestCase
     public function testNotificationExceptionOnSenderWithoutRoute(): void
     {
         $this->expectException(MissingNotificationRouteException::class);
-        $this->expectExceptionMessageRegExp('~Missing notification route~i');
+        $this->expectExceptionMessageMatches('~Missing notification route~i');
 
         $api_client = new ApiClientMock('foo', 'bar');
         $channel    = new SmsPilotChannel($api_client);
@@ -64,7 +64,7 @@ class SmsPilotChannelTest extends AbstractTestCase
     public function testNotificationExceptionOnNotificationInvalidRoute(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessageRegExp('~must returns object with instance~i');
+        $this->expectExceptionMessageMatches('~must returns object with instance~i');
 
         $api_client = new ApiClientMock('foo', 'bar');
         $channel    = new SmsPilotChannel($api_client);

@@ -36,7 +36,7 @@ class MessageSentResponseTest extends AbstractTestCase
     public function testExceptionWithInvalidJsonPassedIntoConstructor(): void
     {
         $this->expectException(InvalidResponseException::class);
-        $this->expectExceptionMessageRegExp('~Cannot decode~i');
+        $this->expectExceptionMessageMatches('~Cannot decode~i');
 
         new MessageSentResponse(new Response(200, [], '{"foo":'));
     }
