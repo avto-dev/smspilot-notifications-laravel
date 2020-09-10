@@ -22,7 +22,7 @@ class SmsPilotServiceProvider extends IlluminateServiceProvider
         $this->app
             ->when(SmsPilotChannel::class)
             ->needs(ApiClientInterface::class)
-            ->give(function (Container $app) {
+            ->give(static function (Container $app) {
                 /** @var ConfigRepository $config */
                 $config = $app->make(ConfigRepository::class);
 
