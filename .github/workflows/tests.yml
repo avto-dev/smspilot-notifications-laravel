@@ -64,7 +64,7 @@ jobs: # Docs: <https://git.io/JvxXE>
         run: composer require --dev --update-with-dependencies --prefer-dist --no-suggest --ansi laravel/laravel "${{ matrix.laravel }}"
 
       - name: Show most important packages versions
-        run: composer info | grep -e laravel -e phpunit -e phpstan
+        run: composer info | grep -e laravel -e phpunit/phpunit -e phpstan -e guzzle
 
       - name: Execute tests
         if: matrix.coverage != 'yes'
