@@ -26,10 +26,13 @@ class SmsPilotServiceProvider extends IlluminateServiceProvider
                 /** @var ConfigRepository $config */
                 $config = $app->make(ConfigRepository::class);
 
-                return new ApiClient(
-                    $config->get('services.sms-pilot.key'),
-                    $config->get('services.sms-pilot.sender_name')
-                );
+                /** @var string $api_key */
+                $api_key = $config->get('services.sms-pilot.key');
+
+                /** @var string $default_sender_name */
+                $default_sender_name = $config->get('services.sms-pilot.sender_name');
+
+                return new ApiClient($api_key, $default_sender_name);
             });
     }
 }

@@ -14,14 +14,14 @@ class SmsPilotMessage implements Jsonable, Arrayable
      *
      * @var string|null
      */
-    public $content;
+    public ?string $content = null;
 
     /**
      * Receiver phone number.
      *
      * @var string|null
      */
-    public $to;
+    public ?string $to = null;
 
     /**
      * Sender name. Leave 'null' for using value from settings.
@@ -30,17 +30,7 @@ class SmsPilotMessage implements Jsonable, Arrayable
      *
      * @var string|null
      */
-    public $from;
-
-    /**
-     * Static factory method.
-     *
-     * @return static
-     */
-    public static function create(): self
-    {
-        return new static;
-    }
+    public ?string $from = null;
 
     /**
      * Set a sender name.

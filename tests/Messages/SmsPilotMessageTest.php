@@ -28,16 +28,6 @@ class SmsPilotMessageTest extends AbstractTestCase
     }
 
     /**
-     * Test static factory method.
-     *
-     * @return void
-     */
-    public function testCreateMethod(): void
-    {
-        $this->assertInstanceOf(SmsPilotMessage::class, SmsPilotMessage::create());
-    }
-
-    /**
      * Test 'content' data accessors.
      *
      * @return void

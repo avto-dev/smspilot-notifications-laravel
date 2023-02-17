@@ -29,7 +29,7 @@ class ApiClientTest extends AbstractTestCase
             new Response(200, [], '{"some":foo'),
         ]);
 
-        $client->send(SmsPilotMessage::create());
+        $client->send(new SmsPilotMessage);
     }
 
     /**
@@ -45,7 +45,7 @@ class ApiClientTest extends AbstractTestCase
             new Response(200, [], '{}'),
         ]);
 
-        $client->send(SmsPilotMessage::create());
+        $client->send(new SmsPilotMessage);
     }
 
     /**
@@ -62,7 +62,7 @@ class ApiClientTest extends AbstractTestCase
             new Response(501, [], 'Server error'),
         ]);
 
-        $client->send(SmsPilotMessage::create());
+        $client->send(new SmsPilotMessage);
     }
 
     /**
@@ -80,7 +80,7 @@ class ApiClientTest extends AbstractTestCase
             new Response(200, [], '{"error":{"code":666,"description":"Error desc"}}'),
         ]);
 
-        $client->send(SmsPilotMessage::create());
+        $client->send(new SmsPilotMessage);
     }
 
     /**
@@ -98,7 +98,7 @@ class ApiClientTest extends AbstractTestCase
             new Response(200, [], '{"error":{"code":false,"description":false}}'),
         ]);
 
-        $client->send(SmsPilotMessage::create());
+        $client->send(new SmsPilotMessage);
     }
 
     /**
@@ -121,7 +121,7 @@ class ApiClientTest extends AbstractTestCase
         ]);
 
         $response = $client->send(
-            SmsPilotMessage::create()
+            (new SmsPilotMessage)
                 ->from($from = 'some sender')
                 ->content($content = 'some content')
                 ->to($to)

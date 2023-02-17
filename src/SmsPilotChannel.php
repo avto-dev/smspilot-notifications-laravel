@@ -43,6 +43,11 @@ class SmsPilotChannel
      */
     public function send($notifiable, Notification $notification): ?MessageSentResponse
     {
+        /** @var object $notifiable */
+        if (! \method_exists($notifiable, 'routeNotificationFor')) {
+            return null;
+        }
+
         if (! $receiver_phone_number = $notifiable->routeNotificationFor('SmsPilot')) {
             return null;
         }
