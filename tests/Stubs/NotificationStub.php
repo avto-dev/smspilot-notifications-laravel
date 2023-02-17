@@ -13,7 +13,7 @@ class NotificationStub extends Notification
      */
     public function toSmsPilot()
     {
-        return SmsPilotMessage::create()
+        return (new SmsPilotMessage)
             ->from('Devil')
             ->content('Some content');
     }

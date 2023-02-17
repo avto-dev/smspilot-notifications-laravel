@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog][keepachangelog] and this project adheres to [Semantic Versioning][semver].
 
+## Unreleased
+
+### Changed
+
+- Composer `2.x` is supported now
+- Minimal Laravel version now is `9.0`
+- Minimal require PHP version now is `8.0`
+
+### Removed
+
+- Ability to create a message through the static method `::create()`
+
 ## v2.4.0
 
 ### Added

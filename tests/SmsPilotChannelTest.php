@@ -95,6 +95,19 @@ class SmsPilotChannelTest extends AbstractTestCase
     }
 
     /**
+     * Test it returns null when it send notification on "notifiable" without routeNotificationFor method.
+     *
+     * @return void
+     */
+    public function testNotificationReturnsNullOnNotifiableWithoutRouteNotificationFor(): void
+    {
+        $api_client = new ApiClientMock('foo', 'bar');
+        $channel    = new SmsPilotChannel($api_client);
+
+        $this->assertNull($channel->send(\stdClass::class, new NotificationStub));
+    }
+
+    /**
      * Test 'to' field overwriting, when 'toSmsPilot' method set it.
      *
      * @return void
@@ -108,7 +121,7 @@ class SmsPilotChannelTest extends AbstractTestCase
             ->shouldReceive($what)
             ->once()
             ->andReturnUsing(function () use (&$to) {
-                return SmsPilotMessage::create()
+                return (new SmsPilotMessage)
                     ->to($to)
                     ->from('Devil')
                     ->content('Some content');

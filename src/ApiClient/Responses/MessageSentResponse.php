@@ -18,7 +18,7 @@ class MessageSentResponse extends AbstractResponse
         $messages = [];
 
         foreach ((array) $this->getBody('send') as $raw_message) {
-            $messages[] = $this->convertRawMessageInfoIntoObject($raw_message);
+            $messages[] = $this->convertRawMessageInfoIntoObject((array) $raw_message);
         }
 
         return \array_filter($messages);
@@ -64,9 +64,12 @@ class MessageSentResponse extends AbstractResponse
         if (
             isset($message_data['server_id'], $message_data['phone'], $message_data['price'], $message_data['status'])
         ) {
+            /** @var string $phone */
+            $phone = $message_data['phone'];
+
             return new SmsPilotSentMessage(
                 (int) $message_data['server_id'],
-                (string) $message_data['phone'],
+                $phone,
                 (float) $message_data['price'],
                 (int) $message_data['status']
             );
