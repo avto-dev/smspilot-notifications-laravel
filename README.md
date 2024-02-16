@@ -13,7 +13,7 @@
 [![Downloads count][badge_downloads_count]][link_packagist]
 [![License][badge_license]][link_license]
 
-This package makes it easy to send notifications using [SMS Pilot][smspilot_home] with Laravel 5.
+This package makes it easy to send notifications using [SMS Pilot][smspilot_home] with Laravel 9.
 
 ## Installation
 
