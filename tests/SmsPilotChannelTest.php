@@ -17,7 +17,7 @@ use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 use AvtoDev\SmsPilotNotifications\Exceptions\MissingNotificationRouteException;
 
 /**
- * @covers \AvtoDev\SmsPilotNotifications\SmsPilotChannel<extended>
+ * @covers \AvtoDev\SmsPilotNotifications\SmsPilotChannel
  */
 class SmsPilotChannelTest extends AbstractTestCase
 {

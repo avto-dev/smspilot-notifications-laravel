@@ -8,7 +8,7 @@ use AvtoDev\SmsPilotNotifications\SmsPilotChannel;
 use AvtoDev\SmsPilotNotifications\ApiClient\ApiClient;
 
 /**
- * @covers \AvtoDev\SmsPilotNotifications\SmsPilotServiceProvider<extended>
+ * @covers \AvtoDev\SmsPilotNotifications\SmsPilotServiceProvider
  */
 class SmsPilotServiceProviderTest extends AbstractTestCase
 {

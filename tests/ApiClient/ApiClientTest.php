@@ -12,7 +12,7 @@ use AvtoDev\SmsPilotNotifications\Exceptions\HttpRequestException;
 use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
 
 /**
- * @covers \AvtoDev\SmsPilotNotifications\ApiClient\ApiClient<extended>
+ * @covers \AvtoDev\SmsPilotNotifications\ApiClient\ApiClient
  */
 class ApiClientTest extends AbstractTestCase
 {

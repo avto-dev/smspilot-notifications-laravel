@@ -11,7 +11,7 @@ use AvtoDev\SmsPilotNotifications\Exceptions\InvalidResponseException;
 use AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse;
 
 /**
- * @covers \AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse<extended>
+ * @covers \AvtoDev\SmsPilotNotifications\ApiClient\Responses\MessageSentResponse
  */
 class MessageSentResponseTest extends AbstractTestCase
 {

@@ -7,6 +7,9 @@ namespace AvtoDev\SmsPilotNotifications\Messages;
 use Illuminate\Contracts\Support\Jsonable;
 use Illuminate\Contracts\Support\Arrayable;
 
+/**
+ * @implements Arrayable<string, mixed>
+ */
 class SmsPilotMessage implements Jsonable, Arrayable
 {
     /**

@@ -8,7 +8,7 @@ use AvtoDev\SmsPilotNotifications\Tests\AbstractTestCase;
 use AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage;
 
 /**
- * @covers \AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage<extended>
+ * @covers \AvtoDev\SmsPilotNotifications\Messages\SmsPilotMessage
  */
 class SmsPilotMessageTest extends AbstractTestCase
 {
