@@ -141,7 +141,7 @@ class Notifiable
 
 ### Testing
 
-For package testing we use `phpunit` framework and `docker-ce` + `docker-compose` as develop environment. So, just write into your terminal after repository cloning:
+For package testing we use `phpunit` framework and `docker` with `compose` plugin as develop environment. So, just write into your terminal after repository cloning:
 
 ```shell
 $ make build
