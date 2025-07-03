@@ -15,7 +15,6 @@ The format is based on [Keep a Changelog][keepachangelog] and this project adher
 
 - Minimal require PHP version now is `8.2`
 - Version of `composer` in docker container updated up to `2.8.9`
-- Updated dev dependencies
 
 ## v2.6.0
 
